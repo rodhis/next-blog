@@ -3,16 +3,10 @@ import Image from "next/image"
 
 import styles from "@/styles/post-item.module.css"
 
-interface Post {
-    title: string;
-    image: string;
-    excerpt: string;
-    date: string;
-    slug: string;
-}
+import { Post } from "@/interfaces/Post"
 
 interface PostItemProps {
-    post: Post;
+    post: Post
 }
 
 export default function PostItem(props: PostItemProps) {
@@ -25,12 +19,19 @@ export default function PostItem(props: PostItemProps) {
     })
 
     const imagePath = `/images/posts/${slug}/${image}`
-    
+    const linkPath = `/posts/${slug}`
+
     return (
         <li className={styles.post}>
-            <Link href="/posts/[slug]" as={`/posts/${slug}`}>
+            <Link href={linkPath}>
                 <div className={styles.image}>
-                    <Image src={imagePath} alt={title} width={300} height={200} />
+                    <Image
+                        src={imagePath}
+                        alt={title}
+                        width={300}
+                        height={200}
+                        layout="responsive"
+                    />
                 </div>
                 <div className={styles.content}>
                     <h3>{title}</h3>
