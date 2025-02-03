@@ -1,5 +1,7 @@
 import PostHeader from "@/components/posts/post-detail/post-header"
 
+import ReactMarkdown from "react-markdown"
+
 import styles from "@/styles/post-content.module.css"
 
 const DUMMY_POST = {
@@ -16,9 +18,9 @@ export default function PostContent() {
     console.log("Rendering PostContent with imagePath:", imagePath)
 
     return (
-        <article>
+        <article className={styles.content}>
             <PostHeader title={DUMMY_POST.title} image={imagePath} />
-            {DUMMY_POST.content}
+            <ReactMarkdown>{DUMMY_POST.content}</ReactMarkdown>
         </article>
     )
 }
