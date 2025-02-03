@@ -18,7 +18,7 @@ export default function PostContent() {
     return (
         <article>
             <PostHeader title={DUMMY_POST.title} image={imagePath} />
-            <div dangerouslySetInnerHTML={{ __html: DUMMY_POST.content }} />
+            {DUMMY_POST.content}
         </article>
     )
 }
