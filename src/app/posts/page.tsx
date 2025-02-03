@@ -15,6 +15,7 @@ const DUMMY_POSTS = [
         excerpt: "Nextjs is awesome! lets gooo",
         date: "2025-01-30",
     },
+    
 ]
 
 export default function AllPostsPage() {

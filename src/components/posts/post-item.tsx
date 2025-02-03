@@ -30,7 +30,7 @@ export default function PostItem(props: PostItemProps) {
                         alt={title}
                         width={300}
                         height={200}
-                        layout="responsive"
+                        style={{ width: "100%", height: "auto" }}
                     />
                 </div>
                 <div className={styles.content}>
