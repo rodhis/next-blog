@@ -1,20 +1,19 @@
-import PostItem from "./post-item";
+import PostItem from "./post-item"
 
-import { Post } from "@/interfaces/Post";
+import { Post } from "@/interfaces/Post"
 
-import styles from "@/styles/posts-grid.module.css";
-
+import styles from "@/styles/posts-grid.module.css"
 
 interface PostsGridProps {
-  posts: Post[];
+    posts: Post[]
 }
 
 export default function PostsGrid({ posts = [] }: PostsGridProps) {
-  return (
-    <ul className={styles.grid}>
-      {posts.map(post => (
-        <PostItem key={post.slug} post={post} />
-      ))}
-    </ul>
-  );
+    return (
+        <ul className={styles.grid}>
+            {posts.map((post) => (
+                <PostItem key={post.slug} post={post} />
+            ))}
+        </ul>
+    )
 }

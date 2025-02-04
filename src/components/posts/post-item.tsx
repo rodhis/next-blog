@@ -1,9 +1,9 @@
 import Link from "next/link"
 import Image from "next/image"
 
-import styles from "@/styles/post-item.module.css"
-
 import { Post } from "@/interfaces/Post"
+
+import styles from "@/styles/post-item.module.css"
 
 interface PostItemProps {
     post: Post

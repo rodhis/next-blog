@@ -11,7 +11,8 @@ export default function Hero() {
             </div>
             <h1>Hello! I&apos;m Rodrigo, but you can call me Rodhis!</h1>
             <p>
-                I&apos;m a full stack developer, and I&apos;m making this blog to tell you bits about my work.
+                I&apos;m a full stack developer, and I&apos;m making this blog to tell you bits
+                about my work.
             </p>
         </section>
     )
