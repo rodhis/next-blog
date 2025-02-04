@@ -9,9 +9,9 @@ export default function Hero() {
             <div className={styles.image}>
                 <Image src={myPic} alt="An image of Rodhis" width={300} height={300} />
             </div>
-            <h1>Hello! I'm Rodrigo, but you can call me Rodhis!</h1>
+            <h1>Hello! I&apos;m Rodrigo, but you can call me Rodhis!</h1>
             <p>
-                I'm a full stack developer, and I'm making this blog to tell you bits about my work.
+                I&apos;m a full stack developer, and I&apos;m making this blog to tell you bits about my work.
             </p>
         </section>
     )
