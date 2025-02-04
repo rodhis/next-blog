@@ -7,7 +7,6 @@ interface FeaturedPostsProps {
 }
 
 export default function FeaturedPosts({ posts }: FeaturedPostsProps) {
-  console.log("FeaturedPosts posts:", posts);
 
   return (
     <section className={styles.latest}>

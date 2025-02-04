@@ -1,8 +1,8 @@
 ---
 title: 'Getting started with NextJS'
 date: '2025-02-03'
-image: getting-started-nextjs.png
-excerpt: ""Nextjs is a framework for building fullstack React apps with SSR."
+image: /posts/getting-started-with-nextjs/getting-started-nextjs.png
+excerpt: "Nextjs is a framework for building fullstack React apps with SSR."
 isFeatured: true
 ---
 
@@ -14,8 +14,8 @@ Next.js 15 is a powerful React framework that enables developers to build fast a
 
 Before you begin, ensure you have the following installed:
 
-- Node.js (version 14.0 or higher)
-- npm (version 6.0 or higher) or Yarn
+-   Node.js (version 14.0 or higher)
+-   npm (version 6.0 or higher) or Yarn
 
 ## Setting Up a New Next.js Project
 
@@ -50,10 +50,10 @@ my-nextjs-app/
 └── next.config.js
 ```
 
-- `pages/`: Contains the application's pages.
-- `public/`: Static files like images.
-- `styles/`: Global and component-specific styles.
-- `next.config.js`: Configuration file for Next.js.
+-   `pages/`: Contains the application's pages.
+-   `public/`: Static files like images.
+-   `styles/`: Global and component-specific styles.
+-   `next.config.js`: Configuration file for Next.js.
 
 ## Creating Your First Page
 
@@ -62,7 +62,7 @@ my-nextjs-app/
     ```jsx
     // pages/about.js
     export default function About() {
-      return <h1>About Page</h1>;
+        return <h1>About Page</h1>
     }
     ```
 

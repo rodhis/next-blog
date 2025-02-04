@@ -1,32 +1,14 @@
 import FeaturedPosts from "@/components/home-page/featured-posts";
 import Hero from "@/components/home-page/hero";
-import { Post } from "@/interfaces/Post";
-import { getFeaturedPosts } from "@/lib/posts-util";
+import { getFeaturedPosts } from '@/lib/posts-util'; // Adjust the import path
 
-interface HomePageProps {
-  posts: Post[];
-}
-
-export default function HomePage({ posts }: HomePageProps) {
-  console.log("HomePage posts:", posts); 
-
+export default function HomePage() {
+  const featuredPosts = getFeaturedPosts();
+  
   return (
     <>
       <Hero />
-      <FeaturedPosts posts={posts} />
+      <FeaturedPosts posts={featuredPosts} />
     </>
   );
-}
-
-export async function getStaticProps() {
-  console.log("getStaticProps called"); 
-  const featuredPosts = getFeaturedPosts();
-  console.log("Featured posts in getStaticProps:", featuredPosts); // Debugging line
-
-  return {
-    props: {
-      posts: featuredPosts,
-    },
-    revalidate: 1800,
-  };
 }

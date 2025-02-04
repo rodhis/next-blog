@@ -1,53 +1,44 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "fs"
+import path from "path"
+import matter from "gray-matter"
 
-const postsDirectory = path.join(process.cwd(), 'postsDB');
-console.log("Posts directory path:", postsDirectory); 
+import { Post } from "../interfaces/Post"
 
-if (!fs.existsSync(postsDirectory)) {
-    console.error("Posts directory does not exist:", postsDirectory); 
-  }
+const postsDirectory = path.join(process.cwd(), "postsDB")
 
-function getPostData(fileName: string) {
-  const filePath = path.join(postsDirectory, fileName);
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
-  const { data, content } = matter(fileContent);
+function getPostData(fileName: string): Post {
+    const filePath = path.join(postsDirectory, fileName)
+    const fileContent = fs.readFileSync(filePath, "utf-8")
+    const { data, content } = matter(fileContent)
 
-  const postSlug = fileName.replace(/\.md$/, '');
+    const postSlug = fileName.replace(/\.md$/, "")
 
-  const postData = {
-    slug: postSlug,
-    date: data.date,
-    isFeatured: data.isFeatured || false,
-    ...data,
-    content,
-  };
+    const postData: Post = {
+        slug: postSlug,
+        title: data.title,
+        date: data.date,
+        image: data.image,
+        excerpt: data.excerpt,
+        content,
+        isFeatured: data.isFeatured || false,
+    }
 
-  return postData;
+    return postData
 }
 
-export function getAllPosts() {
-  const postFiles = fs.readdirSync(postsDirectory);
-  console.log("Post files:", postFiles);
+export function getAllPosts(): Post[] {
+    const postFiles = fs.readdirSync(postsDirectory)
 
-  const allPosts = postFiles.map(postFile => {
-    return getPostData(postFile);
-  });
+    const allPosts = postFiles.map((postFile) => {
+        return getPostData(postFile)
+    })
 
-  console.log("All posts:", allPosts); 
-
-  const sortedPosts = allPosts.sort((postA, postB) => (postA.date > postB.date ? -1 : 1));
-
-  return sortedPosts;
+    return allPosts
 }
 
-export function getFeaturedPosts() {
-  const allPosts = getAllPosts();
-  console.log("All posts in getFeaturedPosts:", allPosts); 
+export function getFeaturedPosts(): Post[] {
+    const allPosts = getAllPosts()
+    const featuredPosts = allPosts.filter((post) => post.isFeatured)
 
-  const featuredPosts = allPosts.filter(post => post.isFeatured);
-  console.log("Featured posts:", featuredPosts); 
-
-  return featuredPosts;
+    return featuredPosts
 }
