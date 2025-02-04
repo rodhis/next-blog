@@ -9,7 +9,7 @@ interface PostsGridProps {
   posts: Post[];
 }
 
-export default function PostsGrid({ posts }: PostsGridProps) {
+export default function PostsGrid({ posts = [] }: PostsGridProps) {
   return (
     <ul className={styles.grid}>
       {posts.map(post => (
