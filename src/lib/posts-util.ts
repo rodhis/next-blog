@@ -6,12 +6,17 @@ import { Post } from "../interfaces/Post"
 
 const postsDirectory = path.join(process.cwd(), "postsDB")
 
-function getPostData(fileName: string): Post {
-    const filePath = path.join(postsDirectory, fileName)
+export function getPostsFiles() {
+    return fs.readdirSync(postsDirectory)
+}
+
+export function getPostData(postIdentifier: string): Post {
+    const postSlug = postIdentifier.replace(/\.md$/, "")
+    const filePath = path.join(postsDirectory, `${postSlug}.md`)
     const fileContent = fs.readFileSync(filePath, "utf-8")
     const { data, content } = matter(fileContent)
 
-    const postSlug = fileName.replace(/\.md$/, "")
+    
 
     const postData: Post = {
         slug: postSlug,
@@ -27,13 +32,15 @@ function getPostData(fileName: string): Post {
 }
 
 export function getAllPosts(): Post[] {
-    const postFiles = fs.readdirSync(postsDirectory)
+    const postFiles = getPostsFiles()
 
     const allPosts = postFiles.map((postFile) => {
         return getPostData(postFile)
     })
 
-    return allPosts
+    const sortedPosts = allPosts.sort((postA, postB) => (postA.date > postB.date ? -1 : 1))
+
+    return sortedPosts
 }
 
 export function getFeaturedPosts(): Post[] {
