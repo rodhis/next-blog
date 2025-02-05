@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 
 
   export default async function PostDetailPage({ params }: { params: { slug: string } }) {
-    const { slug } = params
+    const { slug } = await params
     const postData = getPostData(slug)
 
     if(!postData) {

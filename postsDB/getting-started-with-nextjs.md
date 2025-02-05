@@ -34,26 +34,16 @@ Before you begin, ensure you have the following installed:
 
     Your application will be available at `http://localhost:3000`.
 
-## Project Structure
+## Project Structure with App Router
 
-A typical Next.js project structure looks like this:
+A typical Next.js project structure using App Router looks like this:
 
-```
-my-nextjs-app/
-├── pages/
-│   ├── index.js
-│   └── _app.js
-├── public/
-├── styles/
-│   └── globals.css
-├── package.json
-└── next.config.js
-```
+![App router folder structure](/images/posts/getting-started-with-nextjs/app-router-layout.jpg)
 
--   `pages/`: Contains the application's pages.
+-   `app/`: Contains the application's pages. Each page.tsx correspond to a page.
 -   `public/`: Static files like images.
--   `styles/`: Global and component-specific styles.
--   `next.config.js`: Configuration file for Next.js.
+-   `layout file`: Root layout that will appear on all your pages.
+-   `[slug]/`: Folders with names with square brackets contains dynamic routes.
 
 ## Creating Your First Page
 
