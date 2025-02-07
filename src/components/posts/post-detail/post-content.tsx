@@ -1,6 +1,8 @@
 import Image from 'next/image'
 
 import ReactMarkdown from 'react-markdown'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 import PostHeader from '@/components/posts/post-detail/post-header'
 import { Post } from '@/interfaces/Post'
@@ -17,7 +19,9 @@ export default function PostContent({ post }: { post: Post }) {
             if (node.children[0].tagName === 'img') {
                 const image = node.children[0]
 
-                const imageSrc = image.properties.src.startsWith('/') ? image.properties.src : `/images/posts/${post.slug}/${image.properties.src}`
+                const imageSrc = image.properties.src.startsWith('/')
+                    ? image.properties.src
+                    : `/images/posts/${post.slug}/${image.properties.src}`
                 return (
                     <div className={styles.image}>
                         <Image src={imageSrc} alt={image.alt || ''} width={600} height={300} />
@@ -26,6 +30,16 @@ export default function PostContent({ post }: { post: Post }) {
             }
 
             return <p>{paragraph.children}</p>
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        code(code: any) {
+            const { className, children } = code
+            const language = className.split('-')[1]
+            return (
+                <SyntaxHighlighter language={language} style={atomDark}>
+                    {children}
+                </SyntaxHighlighter>
+            )
         },
     }
 
