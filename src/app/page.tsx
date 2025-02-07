@@ -1,14 +1,9 @@
-import HomePage from "."
-import Layout from "@/components/layout/layout"
+import HomePage from '.'
 
-import "../styles/globals.css"
+import '../styles/globals.css'
 
-import { AppProps } from "next/app"
+import { AppProps } from 'next/app'
 
 export default function MyApp({ pageProps }: AppProps) {
-    return (
-        <Layout>
-            <HomePage {...pageProps} />
-        </Layout>
-    )
+    return <HomePage {...pageProps} />
 }
