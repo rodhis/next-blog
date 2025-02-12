@@ -1,7 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
 import Notification from '../ui/notification'
+
 import styles from '@/styles/contact-form.module.css'
 
 async function sendContactData(contactDetails: { email: string; name: string; message: string }) {
@@ -23,9 +25,20 @@ export default function ContactForm() {
         email: '',
         name: '',
         message: '',
-        requestStatus: '' as 'pending' | 'success' | 'error' | '',
+        requestStatus: null as 'pending' | 'success' | 'error' | null,
         requestError: '',
     })
+
+    useEffect(() => {
+        if (formData.requestStatus === 'pending' || formData.requestStatus === 'error') {
+            const timer = setTimeout(() => {
+                setFormData((prev) => ({ ...prev, requestStatus: null }))
+                setFormData((prev) => ({ ...prev, requestError: '' }))
+            }, 3000)
+
+            return () => clearTimeout(timer)
+        }
+    }, [formData.requestStatus])
 
     async function sendMessageHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -39,6 +52,7 @@ export default function ContactForm() {
                 message: formData.message,
             })
             setFormData((prev) => ({ ...prev, requestStatus: 'success', requestError: '' }))
+            setFormData((prev) => ({ ...prev, email: '', name: '', message: '' }))
         } catch (error) {
             setFormData((prev) => ({
                 ...prev,
