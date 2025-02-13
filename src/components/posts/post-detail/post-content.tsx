@@ -16,6 +16,7 @@ export default function PostContent({ post }: { post: Post }) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         p(paragraph: any) {
             const { node } = paragraph
+
             if (node.children[0].tagName === 'img') {
                 const image = node.children[0]
 
@@ -34,7 +35,7 @@ export default function PostContent({ post }: { post: Post }) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         code(code: any) {
             const { className, children } = code
-            const language = className.split('-')[1]
+            const language = className ? className.split('-')[1] : 'plaintext'
             return (
                 <SyntaxHighlighter language={language} style={atomDark}>
                     {children}
