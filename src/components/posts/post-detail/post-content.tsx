@@ -30,7 +30,7 @@ export default function PostContent({ post }: { post: Post }) {
                 )
             }
 
-            return <p>{paragraph.children}</p>
+            return <div>{paragraph.children}</div>
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         code(code: any) {
