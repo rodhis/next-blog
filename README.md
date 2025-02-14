@@ -59,11 +59,12 @@ npm start
 
 ### Environment Variables
 
-Make sure to set up the necessary environment variables. You can create a `.env.local` file in the root of the project with the following content:
+Make sure to set up the necessary environment variables. You can create a `.env` file in the root of the project with the following content:
 
 ```
-USERNAME=''
-PASSWORD=''
+MONGODB_USERNAME=''
+MONGODB_PASSWORD=''
+MONGODB_CLUSTER=''
 ```
 
-Replace `USERNAME` and `PASSWORD` with your actual MongoDB username and password.
+Replace `MONGODB_USERNAME` and `MONGODB_PASSWORD` with your actual MongoDB account username and password. `MONGODB_CLUSTER` should be replaced with your cluster identifier. E.g.: `blogdb.abcd123`.
