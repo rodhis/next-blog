@@ -3,8 +3,9 @@ import { notFound } from 'next/navigation'
 import PostContent from '@/components/posts/post-detail/post-content'
 import { getPostData, getPostsFiles } from '@/lib/posts-util'
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-    const postData = getPostData(params.slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> | { slug: string } }) {
+    const { slug } = await params
+    const postData = await getPostData(slug)
 
     if (!postData) {
         return {
@@ -29,9 +30,13 @@ export async function generateStaticParams() {
 
 export const revalidate = 600
 
-export default async function PostDetailPage({ params }: { params: { slug: string } }) {
+export default async function PostDetailPage({
+    params,
+}: {
+    params: Promise<{ slug: string }> | { slug: string }
+}) {
     const { slug } = await params
-    const postData = getPostData(slug)
+    const postData = await getPostData(slug)
 
     if (!postData) {
         return notFound()

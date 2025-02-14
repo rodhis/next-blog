@@ -1,7 +1,7 @@
-import PostsGrid from "../posts/posts-grid"
-import { Post } from "@/interfaces/Post"
+import PostsGrid from '../posts/posts-grid'
+import { Post } from '@/interfaces/Post'
 
-import styles from "@/styles/featured-posts.module.css"
+import styles from '@/styles/featured-posts.module.css'
 
 interface FeaturedPostsProps {
     posts: Post[]

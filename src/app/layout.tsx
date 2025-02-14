@@ -13,8 +13,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en">
             <body>
                 <MainNavigation />
-                <main>{children}
-                    <div id='notifications'></div>
+                <main>
+                    {children}
+                    <div id="notifications"></div>
                 </main>
             </body>
         </html>
