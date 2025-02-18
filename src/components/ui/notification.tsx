@@ -1,41 +1,41 @@
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom'
 
-import styles from './notification.module.css';
-
+import styles from './notification.module.css'
 
 interface NotificationProps {
-  title: string;
-  message: string;
-  status: 'success' | 'error' | 'pending';
+    title: string
+    message: string
+    status: 'success' | 'error' | 'pending'
 }
 
 function Notification(props: NotificationProps) {
-  const { title, message, status } = props;
+    const { title, message, status } = props
 
-  let statusClasses = '';
+    let statusClasses = ''
 
-  if (status === 'success') {
-    statusClasses = styles.success;
-  }
+    if (status === 'success') {
+        statusClasses = styles.success
+    }
 
-  if (status === 'error') {
-    statusClasses = styles.error;
-  }
+    if (status === 'error') {
+        statusClasses = styles.error
+    }
 
-  const cssClasses = `${styles.notification} ${statusClasses}`;
+    const cssClasses = `${styles.notification} ${statusClasses}`
 
-  const notificationElement = document.getElementById('notifications');
+    const notificationElement = document.getElementById('notifications')
 
-  if (!notificationElement) {
-    return null;
-  }
+    if (!notificationElement) {
+        return null
+    }
 
-  return ReactDOM.createPortal((
-    <div className={cssClasses}>
-      <h2>{title}</h2>
-      <p>{message}</p>
-    </div>
-  ), notificationElement);
+    return ReactDOM.createPortal(
+        <div className={cssClasses}>
+            <h2>{title}</h2>
+            <p>{message}</p>
+        </div>,
+        notificationElement
+    )
 }
 
-export default Notification;
+export default Notification

@@ -1,7 +1,7 @@
-import Image from "next/image"
+import Image from 'next/image'
 
-import styles from "@/styles/hero.module.css"
-import myPic from "@/assets/images/site/rodhis.png"
+import styles from '@/styles/hero.module.css'
+import myPic from '@/assets/images/site/rodhis.png'
 
 export default function Hero() {
     return (
@@ -10,10 +10,7 @@ export default function Hero() {
                 <Image src={myPic} alt="An image of Rodhis" width={300} height={300} />
             </div>
             <h1>Hello! I&apos;m Rodrigo, but you can call me Rodhis!</h1>
-            <p>
-                I&apos;m a full stack developer, and I&apos;m making this blog to tell you bits
-                about my work.
-            </p>
+            <p>I&apos;m a full stack developer, and I&apos;m making this blog to tell you bits about my work.</p>
         </section>
     )
 }

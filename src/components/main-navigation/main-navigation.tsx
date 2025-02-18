@@ -1,7 +1,7 @@
-import Link from "next/link"
+import Link from 'next/link'
 
-import styles from "@/styles/main-navigation.module.css"
-import Logo from "./logo"
+import styles from '@/styles/main-navigation.module.css'
+import Logo from './logo'
 
 export default function MainNavigation() {
     return (

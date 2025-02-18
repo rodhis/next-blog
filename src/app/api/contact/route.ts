@@ -1,20 +1,13 @@
-import { MongoClient } from 'mongodb'
-
 import { NextResponse } from 'next/server'
+
+import { MongoClient } from 'mongodb'
 
 export async function POST(req: Request) {
     try {
         const body = await req.json()
         const { email, name, message, id } = body
 
-        if (
-            !email ||
-            !email.includes('@') ||
-            !name ||
-            name.trim() === '' ||
-            !message ||
-            message.trim() === ''
-        ) {
+        if (!email || !email.includes('@') || !name || name.trim() === '' || !message || message.trim() === '') {
             return NextResponse.json({ message: 'Invalid input.' }, { status: 422 })
         }
 

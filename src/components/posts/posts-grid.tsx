@@ -1,8 +1,8 @@
-import PostItem from "./post-item"
+import PostItem from './post-item'
 
-import { Post } from "@/interfaces/Post"
+import { Post } from '@/interfaces/Post'
 
-import styles from "@/styles/posts-grid.module.css"
+import styles from '@/styles/posts-grid.module.css'
 
 interface PostsGridProps {
     posts: Post[]
