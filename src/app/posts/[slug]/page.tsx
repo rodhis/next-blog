@@ -1,41 +1,31 @@
 import { notFound } from 'next/navigation'
 
-import PostContent from '@/components/posts/post-detail/post-content'
 import { getPostData, getPostsFiles } from '@/lib/posts-util'
+import PostContent from '@/components/posts/post-detail/post-content'
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> | { slug: string } }) {
-    const { slug } = await params
+type ParamsType = Promise<{ slug: string }>
+
+export async function generateMetadata({ params }: { params: ParamsType }) {
+    const { slug }: { slug: string } = await params
     const postData = await getPostData(slug)
 
     if (!postData) {
-        return {
-            title: 'Post não encontrado',
-            description: 'Não foi possível encontrar o post solicitado.',
-        }
+        return { title: 'Post não encontrado', description: 'Não encontrado.' }
     }
 
-    return {
-        title: postData.title,
-        description: postData.excerpt,
-    }
+    return { title: postData.title, description: postData.excerpt }
 }
 
 export async function generateStaticParams() {
-    const postFiles = getPostsFiles()
-
-    return postFiles.map((fileName) => ({
+    return getPostsFiles().map((fileName) => ({
         slug: fileName.replace(/\.md$/, ''),
     }))
 }
 
 export const revalidate = 600
 
-export default async function PostDetailPage({
-    params,
-}: {
-    params: Promise<{ slug: string }> | { slug: string }
-}) {
-    const { slug } = await params
+export default async function Page({ params }: { params: ParamsType }) {
+    const { slug }: { slug: string } = await params
     const postData = await getPostData(slug)
 
     if (!postData) {
