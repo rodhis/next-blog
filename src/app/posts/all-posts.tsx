@@ -1,5 +1,5 @@
 import PostsGrid from '@/components/posts/posts-grid'
-import { Post } from '@/interfaces/Post'
+import { Post } from '@/interfaces/interfaces'
 
 import styles from '@/styles/all-posts.module.css'
 

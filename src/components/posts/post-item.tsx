@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { Post } from '@/interfaces/Post'
+import { Post } from '@/interfaces/interfaces'
 
 import styles from '@/styles/post-item.module.css'
 

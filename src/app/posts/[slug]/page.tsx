@@ -2,8 +2,7 @@ import { notFound } from 'next/navigation'
 
 import { getPostData, getPostsFiles } from '@/lib/posts-util'
 import PostContent from '@/components/posts/post-detail/post-content'
-
-type ParamsType = Promise<{ slug: string }>
+import { ParamsType } from '@/interfaces/interfaces'
 
 export async function generateMetadata({ params }: { params: ParamsType }) {
     const { slug }: { slug: string } = await params

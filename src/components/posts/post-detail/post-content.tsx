@@ -5,7 +5,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 import PostHeader from '@/components/posts/post-detail/post-header'
-import { Post } from '@/interfaces/Post'
+import { Post } from '@/interfaces/interfaces'
 
 import styles from '@/styles/post-content.module.css'
 

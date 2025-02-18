@@ -1,6 +1,6 @@
 import PostItem from './post-item'
 
-import { Post } from '@/interfaces/Post'
+import { Post } from '@/interfaces/interfaces'
 
 import styles from '@/styles/posts-grid.module.css'
 
