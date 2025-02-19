@@ -37,6 +37,12 @@ export default function ContactForm() {
             }, 3000)
 
             return () => clearTimeout(timer)
+        } else {
+            const timer = setTimeout(() => {
+                setFormData((prev) => ({ ...prev, requestStatus: null }))
+                setFormData((prev) => ({ ...prev, requestError: '' }))
+            }, 8000)
+            return () => clearTimeout(timer)
         }
     }, [formData.requestStatus])
 
