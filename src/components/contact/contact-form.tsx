@@ -41,7 +41,7 @@ export default function ContactForm() {
             const timer = setTimeout(() => {
                 setFormData((prev) => ({ ...prev, requestStatus: null }))
                 setFormData((prev) => ({ ...prev, requestError: '' }))
-            }, 8000)
+            }, 6000)
             return () => clearTimeout(timer)
         }
     }, [formData.requestStatus])
@@ -130,7 +130,11 @@ export default function ContactForm() {
                 </div>
             </form>
             {notification && (
-                <Notification status={notification.status} title={notification.title} message={notification.message} />
+                <Notification
+                    status={notification.status}
+                    title={notification.title}
+                    message={notification.message}
+                />
             )}
         </section>
     )
