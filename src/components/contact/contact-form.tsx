@@ -30,20 +30,12 @@ export default function ContactForm() {
     })
 
     useEffect(() => {
-        if (formData.requestStatus === 'pending' || formData.requestStatus === 'error') {
-            const timer = setTimeout(() => {
-                setFormData((prev) => ({ ...prev, requestStatus: null }))
-                setFormData((prev) => ({ ...prev, requestError: '' }))
-            }, 3000)
+        const timer = setTimeout(() => {
+            setFormData((prev) => ({ ...prev, requestStatus: null }))
+            setFormData((prev) => ({ ...prev, requestError: '' }))
+        }, formData.requestStatus === 'pending' || formData.requestStatus === 'error' ? 3000 : 6000)
 
-            return () => clearTimeout(timer)
-        } else {
-            const timer = setTimeout(() => {
-                setFormData((prev) => ({ ...prev, requestStatus: null }))
-                setFormData((prev) => ({ ...prev, requestError: '' }))
-            }, 6000)
-            return () => clearTimeout(timer)
-        }
+        return () => clearTimeout(timer)
     }, [formData.requestStatus])
 
     async function sendMessageHandler(event: React.FormEvent<HTMLFormElement>) {
