@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { MongoClient } from 'mongodb'
+import mongodbConnect from '@/lib/mongodb-connect'
 
 export async function POST(req: Request) {
     try {
@@ -13,18 +13,13 @@ export async function POST(req: Request) {
 
         const newMessage = { email, name, message, id }
 
-        let client
+        const client = await mongodbConnect()
 
-        try {
-            client = await MongoClient.connect(
-                `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTER}.mongodb.net/`
-            )
-        } catch (error) {
-            NextResponse.json({ message: `Could not connect to database: ${error}` }, { status: 500 })
-            return
+        if (!client) {
+            return NextResponse.json({ message: 'Database connection failed.' }, { status: 500 })
         }
         const db = client.db('next1')
-
+        
         try {
             const result = await db.collection('next-blog-messages').insertOne(newMessage)
             newMessage.id = result.insertedId
