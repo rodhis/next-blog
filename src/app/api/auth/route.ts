@@ -4,8 +4,8 @@ import mongodbConnect from '@/lib/mongodb-connect'
 
 import { hashPassword } from '@/lib/auth'
 
-export default async function handler(req: NextRequest, res: NextResponse) {
-    const data = await res.json()
+export async function POST(req: NextRequest) {
+    const data = await req.json()
 
     const { email, password } = data
 
@@ -20,9 +20,9 @@ export default async function handler(req: NextRequest, res: NextResponse) {
     }
     const db = client.db('next1')
 
-    const hashedPassword = hashPassword(password)
+    const hashedPassword = await hashPassword(password)
 
     const result = await db.collection('blog-admin').insertOne({ email, hashedPassword })
 
-    NextResponse.json({ message: 'Created User!' }, { status: 201 })
+    return NextResponse.json({ message: 'Created User!' }, { status: 201 })
 }
