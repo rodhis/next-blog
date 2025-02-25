@@ -20,9 +20,15 @@ export async function POST(req: NextRequest) {
     }
     const db = client.db('next1')
 
+    const existingUser = await db.collection('blog-admin').findOne({ email: email })
+
+    if (existingUser) {
+        return NextResponse.json({ message: 'User exists already!' }, { status: 422 })
+    }
+
     const hashedPassword = await hashPassword(password)
 
-    const result = await db.collection('blog-admin').insertOne({ email, hashedPassword })
+    await db.collection('blog-admin').insertOne({ email, hashedPassword })
 
     return NextResponse.json({ message: 'Created User!' }, { status: 201 })
 }
