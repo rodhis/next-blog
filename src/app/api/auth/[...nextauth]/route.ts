@@ -15,34 +15,41 @@ const handler = NextAuth({
                 password: { label: 'Password', type: 'password' },
             },
             authorize: async (credentials) => {
-                if (!credentials) {
-                    throw new Error('No credentials provided')
+                try {
+                    if (!credentials?.email || !credentials?.password) {
+                        throw new Error('Credenciais inválidas')
+                    }
+
+                    const client = await mongodbConnect()
+                    if (!client) {
+                        throw new Error('Failed to connect to the database')
+                    }
+                    const db = client.db('next1')
+
+                    const user = await db.collection('blog-admin').findOne({
+                        email: credentials.email,
+                    })
+
+                    if (!user) {
+                        console.error('No user matching:', credentials.email)
+                        return null
+                    }
+
+                    const isValid = await verifyPassword(credentials.password, user.hashedPassword)
+
+                    if (!isValid) {
+                        console.error('Incorrect password', credentials.email)
+                        throw new Error('Incorrect password')
+                    }
+
+                    return {
+                        id: user._id.toString(),
+                        email: user.email,
+                    }
+                } catch (error) {
+                    console.error('Authentication failed:', error)
+                    throw error
                 }
-
-                const client = await mongodbConnect()
-
-                if (!client) {
-                    throw new Error('Failed to connect to the database')
-                }
-
-                const usersCollection = client.db().collection('blog-admin')
-
-                const user = await usersCollection.findOne({ email: credentials.email })
-
-                if (!user) {
-                    client.close()
-                    throw new Error('No user found')
-                }
-
-                const isValid = await verifyPassword(credentials.password, user.hashedPassword)
-
-                if (!isValid) {
-                    client.close()
-                    throw new Error('Could not log you in')
-                }
-
-                client.close()
-                return { id: user._id.toString(), email: user.email }
             },
         }),
     ],

@@ -52,7 +52,10 @@ export default function AuthForm() {
             })
 
             if (result?.error) {
-                setError(result.error)
+                const errorMessage = result.error.includes('Incorrect password')
+                    ? 'Incorrect password'
+                    : 'Authentication failed'
+                setError(errorMessage)
             }
 
             console.log(result)
@@ -72,11 +75,17 @@ export default function AuthForm() {
             <form onSubmit={submitHandler}>
                 <div className={styles.control}>
                     <label htmlFor="email">Your Email</label>
-                    <input type="email" id="email" required ref={emailInputRef} />
+                    <input type="email" id="email" required ref={emailInputRef} autoComplete="username" />
                 </div>
                 <div className={styles.control}>
                     <label htmlFor="password">Your Password</label>
-                    <input type="password" id="password" required ref={passwordInputRef} />
+                    <input
+                        type="password"
+                        id="password"
+                        required
+                        ref={passwordInputRef}
+                        autoComplete="current-password"
+                    />
                 </div>
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.actions}>
