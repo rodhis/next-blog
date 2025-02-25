@@ -1,5 +1,7 @@
 'use client'
 
+import { signIn } from 'next-auth/react'
+
 import { useState, useRef } from 'react'
 
 import styles from '@/styles/auth-form.module.css'
@@ -28,17 +30,32 @@ export default function AuthForm() {
 
     const [isLogin, setIsLogin] = useState(true)
 
+    const [error, setError] = useState<string | null>(null)
+
     function switchAuthModeHandler() {
         setIsLogin((prevState) => !prevState)
+        setError(null)
     }
 
     async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        setError(null)
 
         const enteredEmail = emailInputRef.current!.value
         const enteredPassword = passwordInputRef.current!.value
 
         if (isLogin) {
+            const result = await signIn('credentials', {
+                email: enteredEmail,
+                password: enteredPassword,
+                redirect: false,
+            })
+
+            if (result?.error) {
+                setError(result.error)
+            }
+
+            console.log(result)
         } else {
             try {
                 const result = await createUser(enteredEmail, enteredPassword)
@@ -61,6 +78,7 @@ export default function AuthForm() {
                     <label htmlFor="password">Your Password</label>
                     <input type="password" id="password" required ref={passwordInputRef} />
                 </div>
+                {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.actions}>
                     <button>{isLogin ? 'Login' : 'Create Account'}</button>
                     <button type="button" className={styles.toggle} onClick={switchAuthModeHandler}>
