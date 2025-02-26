@@ -7,6 +7,8 @@ import mongodbConnect from '@/lib/mongodb-connect'
 const handler = NextAuth({
     session: {
         strategy: 'jwt',
+        maxAge: 600,
+        updateAge: 300,
     },
     providers: [
         Credentials({

@@ -6,10 +6,7 @@ import Providers from '@/components/providers/session-provider'
 export const metadata = {
     title: 'Next Level Blog',
     description: "Rodhis' Tech Blog",
-    viewport: { 
-        width: 'device-width',
-        initialScale: 1,
-      },
+
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

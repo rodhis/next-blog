@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 
 import styles from '@/styles/main-navigation.module.css'
 import Logo from './logo'
@@ -9,8 +9,9 @@ import Logo from './logo'
 export default function MainNavigation() {
     const { data: session, status } = useSession()
 
-    console.log(session)
-    console.log(status)
+    function logoutHandler() {
+        signOut()
+    }
 
     return (
         <header className={styles.header}>
@@ -34,6 +35,11 @@ export default function MainNavigation() {
                         <li>
                             <Link href="/profile">Profile</Link>
                         </li>
+                    )}
+                    {session && (
+                        <button onClick={logoutHandler} className={styles.logout}>
+                            Logout
+                        </button>
                     )}
                 </ul>
             </nav>
