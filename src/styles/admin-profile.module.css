@@ -1,8 +1,13 @@
 .profile {
-    margin: 3rem auto;
+    margin: var(--size-8) auto;
+    padding: var(--size-4);
+    border-radius: 6px;
+    background-color: var(--color-grey-100);
+    width: 90%;
+    max-width: 50rem;
     text-align: center;
-  }
-  
-  .profile h1 {
+}
+
+.profile h1 {
     font-size: 5rem;
-  }
+}

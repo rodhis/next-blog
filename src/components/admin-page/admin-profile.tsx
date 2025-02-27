@@ -29,11 +29,9 @@ export default function AdminProfile() {
     // }
 
     return (
-        
-            <section className={styles.profile}>
-                <h1>Your User Profile</h1>
-                <AdminForm />
-            </section>
-        
+        <section className={styles.profile}>
+            <h1>Your User Profile</h1>
+            <AdminForm />
+        </section>
     )
 }
