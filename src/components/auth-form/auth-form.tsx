@@ -2,6 +2,8 @@
 
 import { signIn } from 'next-auth/react'
 
+import { useRouter } from 'next/navigation'
+
 import { useState, useRef } from 'react'
 
 import styles from '@/styles/auth-form.module.css'
@@ -32,6 +34,8 @@ export default function AuthForm() {
 
     const [error, setError] = useState<string | null>(null)
 
+    const router = useRouter()
+
     function switchAuthModeHandler() {
         setIsLogin((prevState) => !prevState)
         setError(null)
@@ -56,6 +60,8 @@ export default function AuthForm() {
                     ? 'Incorrect password'
                     : 'Authentication failed'
                 setError(errorMessage)
+            } else {
+                router.replace('/profile')
             }
 
             console.log(result)
