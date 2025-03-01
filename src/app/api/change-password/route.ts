@@ -24,58 +24,57 @@ export async function PATCH(req: NextRequest) {
 
         const body = await req.json()
 
-        if (!body) {
-            return NextResponse.json({ error: 'Request body is missing' }, { status: 400 })
-        }
-
         const oldPassword = body.oldPassword
         const newPassword = body.newPassword
 
+        if (!oldPassword || !newPassword) {
+            return NextResponse.json({ error: 'Missing password fields' }, { status: 400 })
+        }
+
         const client = await mongodbConnect()
 
+        if (!client) {
+            return NextResponse.json({ error: 'Failed to connect to database' }, { status: 500 })
+        }
+
         try {
-            if (!client) {
-                return NextResponse.json({ error: 'Failed to connect to the database' }, { status: 500 })
-            }
-
             const adminCollection = client.db('next1').collection('blog-admin')
-
             const user = await adminCollection.findOne({ email: userEmail })
 
             if (!user) {
-                client.close()
                 return NextResponse.json({ error: 'User not found' }, { status: 404 })
             }
 
-            const currentPassword = user.hashedPassword
+            const currentHashedPassword = user.hashedPassword
 
-            const passwordsAreEqual = await verifyPassword(oldPassword, currentPassword)
+            const passwordsMatch = await verifyPassword(oldPassword, currentHashedPassword)
 
-            if (!passwordsAreEqual) {
-                client.close()
+            if (!passwordsMatch) {
                 return NextResponse.json({ error: 'Incorrect password' }, { status: 403 })
             }
 
-            const hashedPassword = await hashPassword(newPassword)
+            const newHashedPassword = await hashPassword(newPassword)
 
             const result = await adminCollection.updateOne(
                 { email: userEmail },
-                { $set: { password: hashedPassword } }
+                {
+                    $set: {
+                        hashedPassword: newHashedPassword,
+                    },
+                }
             )
 
             if (result.modifiedCount === 0) {
-                throw new Error('Failed to update password')
+                throw new Error('No documents modified')
             }
 
-            client.close()
-
-            return NextResponse.json({ message: 'Password updated' }, { status: 200 })
+            return NextResponse.json({ message: 'Password updated successfully' }, { status: 200 })
         } finally {
-            if (client) {
-                await client.close()
-            }
+            await client.close()
         }
-    } catch {
-        return NextResponse.json({ error: 'Failed to update password' }, { status: 500 })
+    } catch (error: unknown) {
+        console.error('Full error:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Internal server error'
+        return NextResponse.json({ error: errorMessage }, { status: 500 })
     }
 }
