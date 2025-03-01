@@ -14,4 +14,8 @@ export interface NotificationProps {
     status: 'success' | 'error' | 'pending'
 }
 
+export interface AdminFormProps {
+    onChangePassword: (passwordData: { oldPassword: string; newPassword: string }) => void
+}
+
 export type ParamsType = Promise<{ slug: string }>
