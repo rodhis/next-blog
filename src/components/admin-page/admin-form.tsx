@@ -65,5 +65,3 @@ export default function AdminForm({ onChangePassword }: AdminFormProps) {
         </>
     )
 }
-
-//$2b$10$UBGo

@@ -8,7 +8,7 @@ import styles from '@/styles/admin-profile.module.css'
 
 export default function AdminProfile() {
     const [message, setMessage] = useState<string | null>(null)
-    const changePasswordHandler = async(passwordData: { oldPassword: string; newPassword: string }) => {
+    const changePasswordHandler = async (passwordData: { oldPassword: string; newPassword: string }) => {
         try {
             const response = await fetch('/api/change-password', {
                 method: 'PATCH',

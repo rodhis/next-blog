@@ -18,7 +18,7 @@ export async function verifyPassword(password: string, hashedPassword: string): 
 
 // next-auth configuration
 export const authOptions: NextAuthOptions = {
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt',
         maxAge: 20 * 60,

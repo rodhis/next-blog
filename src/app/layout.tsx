@@ -7,7 +7,6 @@ import { authOptions } from '@/lib/auth'
 
 import '@/styles/globals.css'
 
-
 export const metadata = {
     title: 'Next Level Blog',
     description: "Rodhis' Tech Blog",
@@ -15,7 +14,7 @@ export const metadata = {
 
 export const viewport: Viewport = {
     initialScale: 1,
-    width: 'device-width'
+    width: 'device-width',
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
