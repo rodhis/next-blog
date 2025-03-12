@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react'
 
 import { useRouter } from 'next/navigation'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 import styles from '@/styles/auth-form.module.css'
 
@@ -29,12 +29,29 @@ async function createUser(email: string, password: string) {
 export default function AuthForm() {
     const emailInputRef = useRef<HTMLInputElement>(null)
     const passwordInputRef = useRef<HTMLInputElement>(null)
+    const adminKeyRef = useRef<HTMLInputElement>(null)
 
     const [isLogin, setIsLogin] = useState(true)
 
     const [error, setError] = useState<string | null>(null)
 
     const router = useRouter()
+
+    useEffect(() => {
+        const clearError = () => setError(null)
+        
+        const inputs = [
+            emailInputRef.current,
+            passwordInputRef.current,
+            ...(!isLogin ? [adminKeyRef.current] : [])
+        ].filter(Boolean) as HTMLInputElement[]
+
+        inputs.forEach(input => input.addEventListener('input', clearError))
+
+        return () => {
+            inputs.forEach(input => input.removeEventListener('input', clearError))
+        }
+    }, [isLogin])
 
     function switchAuthModeHandler() {
         setIsLogin((prevState) => !prevState)
@@ -47,6 +64,19 @@ export default function AuthForm() {
 
         const enteredEmail = emailInputRef.current!.value
         const enteredPassword = passwordInputRef.current!.value
+        const adminKeyInput = adminKeyRef.current!.value
+
+        const adminAuthKey = process.env.NEXT_PUBLIC_ADMIN_AUTH_KEY
+
+        if (!isLogin && adminKeyInput.length == 0 || adminKeyInput !== adminAuthKey) {
+            setError('Invalid Admin Authorization Key')
+            return
+        }
+
+        if (enteredPassword.trim().length < 8) {
+            setError('Password must be at least 6 characters long.')
+            return
+        }
 
         if (isLogin) {
             const result = await signIn('credentials', {
@@ -92,7 +122,15 @@ export default function AuthForm() {
                         ref={passwordInputRef}
                         autoComplete="current-password"
                     />
-                </div>
+                    </div>
+
+                    {!isLogin && (
+                        <div className={styles.control}>
+                            <label htmlFor="admin-key">Admin Authorization Key</label>
+                            <input type="password" id="admin-key" required ref={adminKeyRef} autoComplete="admin-key" />
+                        </div>
+                    )}
+                
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.actions}>
                     <button>{isLogin ? 'Login' : 'Create Account'}</button>
