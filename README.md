@@ -4,7 +4,7 @@ This next level blog will contain daily relevant information for you life!
 
 ## About
 
-This was a Next.js 13 pages router training project that takes advantages of it's full stack features. I've ported it to Next 15.1 with App Router + TypeScript as an additional challenge. Also uses React Markdown lib to get and render markdown text as blog posts and MongoDB to store user messages.
+This was a Next.js 13 pages router training project that takes advantages of it's full stack features. I've ported it to Next 15.1 with App Router + TypeScript as an additional challenge. Also uses React Markdown lib to get and render markdown text as blog posts and MongoDB to store user messages. Finally, it takes full advange of the Next-Auth lib for user creation and authentication.
 
 ## Live site
 
@@ -65,7 +65,7 @@ npm start
 
 ### Environment Variables
 
-Make sure to set up the necessary environment variables. You can create a `.env` file in the root of the project with the following content:
+Make sure to set up the necessary environment variables. You must create a `.env` file in the root of the project with the following content:
 
 ```
 MONGODB_USERNAME=''
@@ -73,4 +73,20 @@ MONGODB_PASSWORD=''
 MONGODB_CLUSTER=''
 ```
 
-Replace `MONGODB_USERNAME` and `MONGODB_PASSWORD` with your actual MongoDB account username and password. `MONGODB_CLUSTER` should be replaced with your cluster identifier. E.g.: `blogdb.abcd123`.
+Set `MONGODB_USERNAME` and `MONGODB_PASSWORD` with your actual MongoDB account username and password. `MONGODB_CLUSTER` should be setted with your cluster identifier. E.g.: `blogdb.abcd123`.
+
+```
+NEXT_PUBLIC_ADMIN_AUTH_KEY=''
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=''
+```
+
+`NEXT_PUBLIC_ADMIN_AUTH_KEY` works like an authorization key that the user will require to create an admin account. It's kind of how it works in real life when Project Managers have to grant you admin privileges so not everyone can create an admin account.
+
+`NEXTAUTH_SECRET` is a key Next-Auth will use to hash and encrypt the session cookies. I recommend setting an strong key using openssl. On your terminal, type the following:
+```
+openssl rand -base64 32
+```
+Then set the result as the value for this variable on the `.env` file.
+
+`NEXTAUTH_URL` is optional and should point to the actual url of where the project is hosted. E.g.: `NEXTAUTH_URL='http://your-site-sigma.vercel.app`.
