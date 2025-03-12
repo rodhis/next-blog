@@ -78,18 +78,22 @@ export default function AuthForm() {
             try {
                 const validation = await fetch('/api/validate-admin', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ adminKey: adminKeyInput })
-                });
-        
-                if (!validation.ok) {
-                    throw new Error('Admin key validation failed');
+                    headers: { 
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ adminKey: adminKeyInput }),
+                })
+    
+                const data = await validation.json()
+                
+                if (!validation.ok || !data.valid) {
+                    throw new Error('Admin key validation failed')
                 }
             } catch (error) {
-                console.log(error);
-                setError('Invalid Admin Authorization Key');
-                resetSensitiveFields();
-                return;
+                console.error('Validation error:', error)
+                setError('Invalid Admin Authorization Key')
+                resetSensitiveFields()
+                return
             }
         }
 
