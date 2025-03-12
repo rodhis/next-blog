@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
             authorize: async (credentials) => {
                 try {
                     if (!credentials?.email || !credentials?.password) {
-                        throw new Error('Credenciais inválidas')
+                        throw new Error('Invalid credentials')
                     }
 
                     const client = await mongodbConnect()
