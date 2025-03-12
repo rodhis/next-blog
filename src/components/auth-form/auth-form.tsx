@@ -20,7 +20,8 @@ async function createUser(email: string, password: string) {
     const data = await response.json()
 
     if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong!')
+        const genericError = response.status === 409 ? 'Registration conflict' : 'Operation failed'
+        throw new Error(genericError)
     }
 
     return data
@@ -109,7 +110,7 @@ export default function AuthForm() {
             } catch (error) {
                 console.error('Registration error:', error)
                 setError('Operation failed. Please check your credentials and try again.')
-                
+
                 emailInputRef.current!.value = ''
                 passwordInputRef.current!.value = ''
                 if (adminKeyRef.current) adminKeyRef.current.value = ''
