@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom'
 
 import { NotificationProps } from '@/interfaces/interfaces'
 
-import styles from './notification.module.css'
+import styles from '@/styles/notification.module.css'
 
 function Notification(props: NotificationProps) {
     const { title, message, status } = props
