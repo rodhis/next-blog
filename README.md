@@ -76,12 +76,12 @@ MONGODB_CLUSTER=''
 Set `MONGODB_USERNAME` and `MONGODB_PASSWORD` with your actual MongoDB account username and password. `MONGODB_CLUSTER` should be setted with your cluster identifier. E.g.: `blogdb.abcd123`.
 
 ```
-NEXT_PUBLIC_ADMIN_AUTH_KEY=''
+ADMIN_AUTH_KEY=''
 NEXTAUTH_SECRET=
 NEXTAUTH_URL=''
 ```
 
-`NEXT_PUBLIC_ADMIN_AUTH_KEY` works like an authorization key that the user will require to create an admin account. It's kind of how it works in real life when Project Managers have to grant you admin privileges so not everyone can create an admin account.
+`ADMIN_AUTH_KEY` works like an authorization key that the user will require to create an admin account. It's kind of how it works in real life when Project Managers have to grant you admin privileges so not everyone can create an admin account.
 
 `NEXTAUTH_SECRET` is a key Next-Auth will use to hash and encrypt the session cookies. I recommend setting an strong key using openssl. On your terminal, type the following:
 ```
