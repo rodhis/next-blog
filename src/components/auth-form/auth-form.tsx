@@ -74,17 +74,23 @@ export default function AuthForm() {
         const enteredPassword = passwordInputRef.current!.value
         const adminKeyInput = adminKeyRef.current!.value
 
-        const adminAuthKey = process.env.NEXT_PUBLIC_ADMIN_AUTH_KEY
-
-        if (!isLogin && !process.env.NEXT_PUBLIC_ADMIN_AUTH_KEY) {
-            setError('System configuration error')
-            return
-        }
-
-        if (!isLogin && adminKeyInput !== adminAuthKey) {
-            setError('Invalid Admin Authorization Key')
-            resetSensitiveFields()
-            return
+        if (!isLogin) {
+            try {
+                const validation = await fetch('/api/validate-admin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminKey: adminKeyInput })
+                });
+        
+                if (!validation.ok) {
+                    throw new Error('Admin key validation failed');
+                }
+            } catch (error) {
+                console.log(error);
+                setError('Invalid Admin Authorization Key');
+                resetSensitiveFields();
+                return;
+            }
         }
 
         if (enteredPassword.trim().length < 8) {
