@@ -39,17 +39,17 @@ export default function AuthForm() {
 
     useEffect(() => {
         const clearError = () => setError(null)
-        
+
         const inputs = [
             emailInputRef.current,
             passwordInputRef.current,
-            ...(!isLogin ? [adminKeyRef.current] : [])
+            ...(!isLogin ? [adminKeyRef.current] : []),
         ].filter(Boolean) as HTMLInputElement[]
 
-        inputs.forEach(input => input.addEventListener('input', clearError))
+        inputs.forEach((input) => input.addEventListener('input', clearError))
 
         return () => {
-            inputs.forEach(input => input.removeEventListener('input', clearError))
+            inputs.forEach((input) => input.removeEventListener('input', clearError))
         }
     }, [isLogin])
 
@@ -68,7 +68,7 @@ export default function AuthForm() {
 
         const adminAuthKey = process.env.NEXT_PUBLIC_ADMIN_AUTH_KEY
 
-        if (!isLogin && adminKeyInput.length == 0 || adminKeyInput !== adminAuthKey) {
+        if (!isLogin && adminKeyInput !== adminAuthKey) {
             setError('Invalid Admin Authorization Key')
             return
         }
@@ -93,14 +93,26 @@ export default function AuthForm() {
             } else {
                 router.replace('/profile')
             }
-
-            console.log(result)
         } else {
             try {
-                const result = await createUser(enteredEmail, enteredPassword)
-                console.log(result)
+                await createUser(enteredEmail, enteredPassword)
+                setError('User created successfully! Login to continue.')
+
+                emailInputRef.current!.value = ''
+                passwordInputRef.current!.value = ''
+                adminKeyRef.current!.value = ''
+
+                setTimeout(() => {
+                    setIsLogin(true)
+                    setError(null)
+                }, 3000)
             } catch (error) {
-                console.log(error)
+                console.error('Registration error:', error)
+                setError('Operation failed. Please check your credentials and try again.')
+                
+                emailInputRef.current!.value = ''
+                passwordInputRef.current!.value = ''
+                if (adminKeyRef.current) adminKeyRef.current.value = ''
             }
         }
     }
@@ -122,15 +134,21 @@ export default function AuthForm() {
                         ref={passwordInputRef}
                         autoComplete="current-password"
                     />
-                    </div>
+                </div>
 
-                    {!isLogin && (
-                        <div className={styles.control}>
-                            <label htmlFor="admin-key">Admin Authorization Key</label>
-                            <input type="password" id="admin-key" required ref={adminKeyRef} autoComplete="admin-key" />
-                        </div>
-                    )}
-                
+                {!isLogin && (
+                    <div className={styles.control}>
+                        <label htmlFor="admin-key">Admin Authorization Key</label>
+                        <input
+                            type="password"
+                            id="admin-key"
+                            required
+                            ref={adminKeyRef}
+                            autoComplete="admin-key"
+                        />
+                    </div>
+                )}
+
                 {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.actions}>
                     <button>{isLogin ? 'Login' : 'Create Account'}</button>
