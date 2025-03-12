@@ -139,7 +139,7 @@ export default function AuthForm() {
 
     return (
         <section className={styles.auth}>
-            <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+            <h1>{isLogin ? 'Login' : 'Admin Registration'}</h1>
             <form onSubmit={submitHandler}>
                 <div className={styles.control}>
                     <label htmlFor="email">Your Email</label>
@@ -173,7 +173,7 @@ export default function AuthForm() {
                 <div className={styles.actions}>
                     <button>{isLogin ? 'Login' : 'Create Account'}</button>
                     <button type="button" className={styles.toggle} onClick={switchAuthModeHandler}>
-                        {isLogin ? 'Create new account' : 'Login with existing account'}
+                        {isLogin ? 'Admin Registration' : 'Login with existing account'}
                     </button>
                 </div>
             </form>
