@@ -38,6 +38,12 @@ export default function AuthForm() {
 
     const router = useRouter()
 
+    function resetSensitiveFields() {
+        emailInputRef.current!.value = ''
+        passwordInputRef.current!.value = ''
+        if (adminKeyRef.current) adminKeyRef.current.value = ''
+    }
+
     useEffect(() => {
         const clearError = () => setError(null)
 
@@ -51,6 +57,7 @@ export default function AuthForm() {
 
         return () => {
             inputs.forEach((input) => input.removeEventListener('input', clearError))
+            resetSensitiveFields()
         }
     }, [isLogin])
 
@@ -69,13 +76,20 @@ export default function AuthForm() {
 
         const adminAuthKey = process.env.NEXT_PUBLIC_ADMIN_AUTH_KEY
 
+        if (!isLogin && !process.env.NEXT_PUBLIC_ADMIN_AUTH_KEY) {
+            setError('System configuration error')
+            return
+        }
+
         if (!isLogin && adminKeyInput !== adminAuthKey) {
             setError('Invalid Admin Authorization Key')
+            resetSensitiveFields()
             return
         }
 
         if (enteredPassword.trim().length < 8) {
-            setError('Password must be at least 6 characters long.')
+            setError('Password must be at least 8 characters long.')
+            resetSensitiveFields()
             return
         }
 
@@ -91,6 +105,7 @@ export default function AuthForm() {
                     ? 'Incorrect password'
                     : 'Authentication failed'
                 setError(errorMessage)
+                resetSensitiveFields()
             } else {
                 router.replace('/profile')
             }
@@ -98,22 +113,16 @@ export default function AuthForm() {
             try {
                 await createUser(enteredEmail, enteredPassword)
                 setError('User created successfully! Login to continue.')
-
-                emailInputRef.current!.value = ''
-                passwordInputRef.current!.value = ''
-                adminKeyRef.current!.value = ''
+                resetSensitiveFields()
 
                 setTimeout(() => {
                     setIsLogin(true)
                     setError(null)
                 }, 3000)
             } catch (error) {
-                console.error('Registration error:', error)
-                setError('Operation failed. Please check your credentials and try again.')
-
-                emailInputRef.current!.value = ''
-                passwordInputRef.current!.value = ''
-                if (adminKeyRef.current) adminKeyRef.current.value = ''
+                console.log(error)
+                setError('Operation failed. Please check your credentials.')
+                resetSensitiveFields()
             }
         }
     }
