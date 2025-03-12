@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
     const { email, password } = data
 
-    if (!email || !email.includes('@') || !password || password.trim().length < 6) {
+    if (!email || !email.includes('@') || !password || password.trim().length < 8) {
         return NextResponse.json({ message: 'Invalid input.' }, { status: 422 })
     }
 
