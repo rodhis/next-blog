@@ -35,6 +35,7 @@ export default function AuthForm() {
     const [isLogin, setIsLogin] = useState(true)
 
     const [notice, setNotice] = useState<string | null>(null)
+    const [isSuccess, setIsSuccess] = useState(false)
 
     const router = useRouter()
 
@@ -67,6 +68,7 @@ export default function AuthForm() {
     async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         setNotice(null)
+        setIsSuccess(false)
 
         const enteredEmail = emailInputRef.current!.value
         const enteredPassword = passwordInputRef.current!.value
@@ -119,11 +121,13 @@ export default function AuthForm() {
             try {
                 await createUser(enteredEmail, enteredPassword)
                 setNotice('User created successfully! Login to continue.')
+                setIsSuccess(true)
                 resetSensitiveFields()
 
                 setTimeout(() => {
                     setIsLogin(true)
                     setNotice(null)
+                    setIsSuccess(false)
                 }, 3000)
             } catch (error) {
                 console.log(error)
@@ -153,7 +157,7 @@ export default function AuthForm() {
                     </div>
                 )}
 
-                {notice && <p className={styles.notice}>{notice}</p>}
+                {notice && <p className={`${styles.notice} ${isSuccess ? styles.success : ''}`}>{notice}</p>}
                 <div className={styles.actions}>
                     <button>{isLogin ? 'Login' : 'Create Account'}</button>
                     <button type="button" className={styles.toggle} onClick={switchAuthModeHandler}>
