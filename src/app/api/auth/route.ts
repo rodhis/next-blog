@@ -9,8 +9,15 @@ export async function POST(req: NextRequest) {
 
     const { email, password } = data
 
-    if (!email || !email.includes('@') || !password || password.trim().length < 8) {
+    if (!email || !email.includes('@') || !password) {
         return NextResponse.json({ message: 'Invalid input.' }, { status: 422 })
+    }
+
+    if (password.trim().length < 8) {
+        return NextResponse.json(
+            { message: 'Password must be at least 8 characters' },
+            { status: 422 }
+        )
     }
 
     const client = await mongodbConnect()
