@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-import Notification from '../ui/notification'
+import { useNotification } from '@/contexts/notification-context'
 
 import styles from '@/styles/contact-form.module.css'
 
@@ -21,27 +21,25 @@ async function sendContactData(contactDetails: { email: string; name: string; me
 }
 
 export default function ContactForm() {
+    const { showNotification } = useNotification()
+
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
     const [formData, setFormData] = useState({
         email: '',
         name: '',
         message: '',
-        requestStatus: null as 'pending' | 'success' | 'error' | null,
-        requestError: '',
     })
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setFormData((prev) => ({ ...prev, requestStatus: null }))
-            setFormData((prev) => ({ ...prev, requestError: '' }))
-        }, formData.requestStatus === 'pending' || formData.requestStatus === 'error' ? 3000 : 6000)
-
-        return () => clearTimeout(timer)
-    }, [formData.requestStatus])
 
     async function sendMessageHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        setIsSubmitting(true)
 
-        setFormData((prev) => ({ ...prev, requestStatus: 'pending' }))
+        showNotification({
+            title: 'Sending message...',
+            message: 'Your message is on its way!',
+            status: 'pending',
+        })
 
         try {
             await sendContactData({
@@ -49,35 +47,23 @@ export default function ContactForm() {
                 name: formData.name,
                 message: formData.message,
             })
-            setFormData((prev) => ({ ...prev, requestStatus: 'success', requestError: '' }))
-            setFormData((prev) => ({ ...prev, email: '', name: '', message: '' }))
-        } catch (error) {
-            setFormData((prev) => ({
-                ...prev,
-                requestStatus: 'error',
-                requestError: (error as Error).message,
-            }))
-            console.error(`Error sending message: ${error}`)
-            return
-        }
-    }
 
-    let notification
-    if (formData.requestStatus) {
-        notification = {
-            status: formData.requestStatus,
-            title:
-                formData.requestStatus === 'success'
-                    ? 'Success!'
-                    : formData.requestStatus === 'error'
-                    ? 'Error!'
-                    : 'Sending message...',
-            message:
-                formData.requestStatus === 'success'
-                    ? 'Message sent successfully!'
-                    : formData.requestStatus === 'error'
-                    ? formData.requestError
-                    : 'Your message is on its way!',
+            showNotification({
+                title: 'Success!',
+                message: 'Message sent successfully!',
+                status: 'success',
+            })
+
+            setFormData({ email: '', name: '', message: '' })
+        } catch (error) {
+            showNotification({
+                title: 'Error!',
+                message: (error as Error).message || 'Failed to send message',
+                status: 'error',
+            })
+            console.error(`Error sending message: ${error}`)
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
@@ -94,6 +80,7 @@ export default function ContactForm() {
                             required
                             value={formData.email}
                             onChange={(event) => setFormData({ ...formData, email: event.target.value })}
+                            disabled={isSubmitting}
                         />
                     </div>
                     <div className={styles.control}>
@@ -104,6 +91,7 @@ export default function ContactForm() {
                             required
                             value={formData.name}
                             onChange={(event) => setFormData({ ...formData, name: event.target.value })}
+                            disabled={isSubmitting}
                         />
                     </div>
                 </div>
@@ -115,19 +103,13 @@ export default function ContactForm() {
                         required
                         value={formData.message}
                         onChange={(event) => setFormData({ ...formData, message: event.target.value })}
+                        disabled={isSubmitting}
                     ></textarea>
                 </div>
                 <div className={styles.actions}>
-                    <button>Send Message</button>
+                    <button disabled={isSubmitting}>{isSubmitting ? 'Sending...' : 'Send Message'}</button>
                 </div>
             </form>
-            {notification && (
-                <Notification
-                    status={notification.status}
-                    title={notification.title}
-                    message={notification.message}
-                />
-            )}
         </section>
     )
 }
