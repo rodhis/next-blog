@@ -3,6 +3,7 @@ import { Viewport } from 'next'
 
 import MainNavigation from '@/components/main-navigation/main-navigation'
 import Providers from '@/components/providers/session-provider'
+import { NotificationProvider } from '@/contexts/notification-context'
 import { authOptions } from '@/lib/auth'
 
 import '@/styles/globals.css'
@@ -24,11 +25,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <html lang="en">
             <body>
                 <Providers session={session}>
-                    <MainNavigation />
-                    <main>
-                        {children}
-                        <div id="notifications"></div>
-                    </main>
+                    <NotificationProvider>
+                        <MainNavigation />
+                        <main>
+                            {children}
+                            <div id="notifications"></div>
+                        </main>
+                    </NotificationProvider>
                 </Providers>
             </body>
         </html>

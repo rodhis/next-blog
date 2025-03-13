@@ -23,8 +23,7 @@ export default function Notification() {
 
     const notificationElement = document.getElementById('notifications')
 
-    if (!notificationElement)  return null
-    
+    if (!notificationElement) return null
 
     return ReactDOM.createPortal(
         <div className={cssClasses}>
