@@ -34,24 +34,22 @@ export default function AuthForm() {
 
     const [isLogin, setIsLogin] = useState(true)
 
-    const [error, setError] = useState<string | null>(null)
+    const [notice, setNotice] = useState<string | null>(null)
 
     const router = useRouter()
 
     function resetSensitiveFields() {
-        emailInputRef.current!.value = ''
-        passwordInputRef.current!.value = ''
+        if (emailInputRef.current) emailInputRef.current.value = ''
+        if (passwordInputRef.current) passwordInputRef.current.value = ''
         if (adminKeyRef.current) adminKeyRef.current.value = ''
     }
 
     useEffect(() => {
-        const clearError = () => setError(null)
+        const clearError = () => setNotice(null)
 
-        const inputs = [
-            emailInputRef.current,
-            passwordInputRef.current,
-            ...(!isLogin ? [adminKeyRef.current] : []),
-        ].filter(Boolean) as HTMLInputElement[]
+        const inputs = [emailInputRef.current, passwordInputRef.current, ...(!isLogin ? [adminKeyRef.current] : [])].filter(
+            Boolean
+        ) as HTMLInputElement[]
 
         inputs.forEach((input) => input.addEventListener('input', clearError))
 
@@ -63,12 +61,12 @@ export default function AuthForm() {
 
     function switchAuthModeHandler() {
         setIsLogin((prevState) => !prevState)
-        setError(null)
+        setNotice(null)
     }
 
     async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        setError(null)
+        setNotice(null)
 
         const enteredEmail = emailInputRef.current!.value
         const enteredPassword = passwordInputRef.current!.value
@@ -78,27 +76,27 @@ export default function AuthForm() {
             try {
                 const validation = await fetch('/api/validate-admin', {
                     method: 'POST',
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ adminKey: adminKeyInput }),
                 })
-    
+
                 const data = await validation.json()
-                
+
                 if (!validation.ok || !data.valid) {
                     throw new Error('Admin key validation failed')
                 }
             } catch (error) {
                 console.error('Validation error:', error)
-                setError('Invalid Admin Authorization Key')
+                setNotice('Invalid Admin Authorization Key')
                 resetSensitiveFields()
                 return
             }
         }
 
         if (enteredPassword.trim().length < 8) {
-            setError('Password must be at least 8 characters long.')
+            setNotice('Password must be at least 8 characters long.')
             resetSensitiveFields()
             return
         }
@@ -111,10 +109,8 @@ export default function AuthForm() {
             })
 
             if (result?.error) {
-                const errorMessage = result.error.includes('Incorrect password')
-                    ? 'Incorrect password'
-                    : 'Authentication failed'
-                setError(errorMessage)
+                const errorMessage = result.error.includes('Incorrect password') ? 'Incorrect password' : 'Authentication failed'
+                setNotice(errorMessage)
                 resetSensitiveFields()
             } else {
                 router.replace('/profile')
@@ -122,16 +118,16 @@ export default function AuthForm() {
         } else {
             try {
                 await createUser(enteredEmail, enteredPassword)
-                setError('User created successfully! Login to continue.')
+                setNotice('User created successfully! Login to continue.')
                 resetSensitiveFields()
 
                 setTimeout(() => {
                     setIsLogin(true)
-                    setError(null)
+                    setNotice(null)
                 }, 3000)
             } catch (error) {
                 console.log(error)
-                setError('Operation failed. Please check your credentials.')
+                setNotice('Operation failed. Please check your credentials.')
                 resetSensitiveFields()
             }
         }
@@ -147,29 +143,17 @@ export default function AuthForm() {
                 </div>
                 <div className={styles.control}>
                     <label htmlFor="password">Your Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        required
-                        ref={passwordInputRef}
-                        autoComplete="current-password"
-                    />
+                    <input type="password" id="password" required ref={passwordInputRef} autoComplete="current-password" />
                 </div>
 
                 {!isLogin && (
                     <div className={styles.control}>
                         <label htmlFor="admin-key">Admin Authorization Key</label>
-                        <input
-                            type="password"
-                            id="admin-key"
-                            required
-                            ref={adminKeyRef}
-                            autoComplete="admin-key"
-                        />
+                        <input type="password" id="admin-key" required ref={adminKeyRef} autoComplete="admin-key" />
                     </div>
                 )}
 
-                {error && <p className={styles.error}>{error}</p>}
+                {notice && <p className={styles.notice}>{notice}</p>}
                 <div className={styles.actions}>
                     <button>{isLogin ? 'Login' : 'Create Account'}</button>
                     <button type="button" className={styles.toggle} onClick={switchAuthModeHandler}>
