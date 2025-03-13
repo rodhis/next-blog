@@ -21,7 +21,7 @@ export interface NotificationContextType {
 }
 
 export interface AdminFormProps {
-    onChangePassword: (passwordData: { oldPassword: string; newPassword: string }) => void
+    onChangePassword: (passwordData: { oldPassword: string; newPassword: string }) => Promise<void>
 }
 
 export type ParamsType = Promise<{ slug: string }>
