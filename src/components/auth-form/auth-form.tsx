@@ -55,7 +55,7 @@ export default function AuthForm() {
         try {
             const enteredEmail = emailInputRef.current!.value
             const enteredPassword = passwordInputRef.current!.value
-            const adminKeyInput = adminKeyRef.current!.value
+            const adminKeyInput = !isLogin ? adminKeyRef.current!.value : ''
 
             if (!isLogin) {
                 try {
@@ -118,7 +118,14 @@ export default function AuthForm() {
                     })
                     resetSensitiveFields()
                 } else {
-                    router.replace('/profile')
+                    showNotification({
+                        title: 'Success!',
+                        message: 'Login successful! Redirecting...',
+                        status: 'success',
+                    })
+                    setTimeout(() => {
+                        router.replace('/profile')
+                    }, 1500)
                 }
             } else {
                 await createUser(enteredEmail, enteredPassword)
