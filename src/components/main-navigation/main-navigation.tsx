@@ -10,7 +10,10 @@ export default function MainNavigation() {
     const { data: session, status } = useSession()
 
     function logoutHandler() {
-        signOut()
+        signOut({
+            callbackUrl: `${window.location.origin}/`
+        })
+        
     }
 
     return (
