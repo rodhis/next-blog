@@ -14,6 +14,12 @@ export interface NotificationProps {
     status: 'success' | 'error' | 'pending'
 }
 
+export interface NotificationContextType {
+    notification: NotificationProps | null
+    showNotification: (notificationData: NotificationProps) => void
+    hideNotification: () => void
+}
+
 export interface AdminFormProps {
     onChangePassword: (passwordData: { oldPassword: string; newPassword: string }) => void
 }
