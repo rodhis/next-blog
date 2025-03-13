@@ -100,6 +100,13 @@ export default function AuthForm() {
                 return
             }
 
+            showNotification({
+                title: isLogin ? 'Authenticating...' : 'Creating Account...',
+                message: isLogin ? 'Verifying your credentials' : 'Setting up your admin account',
+                status: 'pending'
+            })
+    
+
             if (isLogin) {
                 const result = await signIn('credentials', {
                     email: enteredEmail,
