@@ -34,15 +34,6 @@
     resize: none;
 }
 
-.notice {
-    color: #991814;
-    font-weight: bold;
-}
-
-.notice.success {
-    color: #28a745;
-}
-
 .loading {
     color: #1a73e8;
     font-weight: bold;
@@ -50,9 +41,15 @@
 }
 
 @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .actions {
