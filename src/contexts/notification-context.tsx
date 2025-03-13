@@ -1,39 +1,41 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, ReactNode, useRef, useEffect } from 'react'
 import { NotificationContextType, NotificationProps } from '@/interfaces/interfaces'
 
 const NotificationContext = createContext<NotificationContextType | null>(null)
 
 export function NotificationProvider({ children }: { children: ReactNode }) {
     const [notification, setNotification] = useState<NotificationProps | null>(null)
-    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
     const hideNotification = useCallback(() => {
         setNotification(null)
-        if (timeoutId) {
-            clearTimeout(timeoutId)
-            setTimeoutId(null)
-        }
-    }, [timeoutId])
+    }, [])
 
     const showNotification = useCallback(
         (notificationData: NotificationProps) => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current)
+            }
+
             setNotification(notificationData)
 
-            if (timeoutId) clearTimeout(timeoutId)
-
-            const newTimeoutId = setTimeout(
-                () => {
-                    hideNotification()
-                },
+            timeoutRef.current = setTimeout(
+                () => hideNotification(),
                 notificationData.status === 'pending' ? 3000 : 6000
             )
-
-            setTimeoutId(newTimeoutId)
         },
-        [hideNotification, timeoutId]
+        [hideNotification]
     )
+
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current)
+            }
+        }
+    }, [])
 
     return (
         <NotificationContext.Provider value={{ notification, showNotification, hideNotification }}>
