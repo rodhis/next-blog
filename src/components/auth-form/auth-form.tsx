@@ -89,7 +89,10 @@ export default function AuthForm() {
                 const data = await validation.json()
 
                 if (!validation.ok || !data.valid) {
-                    throw new Error('Admin key validation failed')
+                    setNotice('Invalid Admin Authorization Key');
+                    resetSensitiveFields();
+                    setIsLoading(false)
+                    return; 
                 }
             } catch (error) {
                 console.error('Validation error:', error)
