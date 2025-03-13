@@ -34,6 +34,7 @@ export default function AuthForm() {
 
     const [isLogin, setIsLogin] = useState(true)
 
+    const [isLoading, setIsLoading] = useState(false)
     const [notice, setNotice] = useState<string | null>(null)
     const [isSuccess, setIsSuccess] = useState(false)
 
@@ -69,6 +70,7 @@ export default function AuthForm() {
         event.preventDefault()
         setNotice(null)
         setIsSuccess(false)
+        setIsLoading(true)
 
         const enteredEmail = emailInputRef.current!.value
         const enteredPassword = passwordInputRef.current!.value
@@ -133,6 +135,8 @@ export default function AuthForm() {
                 console.log(error)
                 setNotice('Operation failed. Please check your credentials.')
                 resetSensitiveFields()
+            } finally {
+                setIsLoading(false)
             }
         }
     }
@@ -157,6 +161,7 @@ export default function AuthForm() {
                     </div>
                 )}
 
+                {isLoading && <p className={styles.loading}>Processing...</p>}
                 {notice && <p className={`${styles.notice} ${isSuccess ? styles.success : ''}`}>{notice}</p>}
                 <div className={styles.actions}>
                     <button>{isLogin ? 'Login' : 'Create Account'}</button>
