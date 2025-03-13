@@ -1,11 +1,9 @@
 'use client'
 
 import { signIn } from 'next-auth/react'
-
 import { useRouter } from 'next/navigation'
-
-import { useState, useRef, useEffect } from 'react'
-
+import { useState, useRef } from 'react'
+import { useNotification } from '@/contexts/notification-context'
 import styles from '@/styles/auth-form.module.css'
 
 async function createUser(email: string, password: string) {
@@ -33,10 +31,9 @@ export default function AuthForm() {
     const adminKeyRef = useRef<HTMLInputElement>(null)
 
     const [isLogin, setIsLogin] = useState(true)
-
     const [isLoading, setIsLoading] = useState(false)
-    const [notice, setNotice] = useState<string | null>(null)
-    const [isSuccess, setIsSuccess] = useState(false)
+
+    const { showNotification } = useNotification()
 
     const router = useRouter()
 
@@ -46,101 +43,106 @@ export default function AuthForm() {
         if (adminKeyRef.current) adminKeyRef.current.value = ''
     }
 
-    useEffect(() => {
-        const clearError = () => setNotice(null)
-
-        const inputs = [emailInputRef.current, passwordInputRef.current, ...(!isLogin ? [adminKeyRef.current] : [])].filter(
-            Boolean
-        ) as HTMLInputElement[]
-
-        inputs.forEach((input) => input.addEventListener('input', clearError))
-
-        return () => {
-            inputs.forEach((input) => input.removeEventListener('input', clearError))
-            resetSensitiveFields()
-        }
-    }, [isLogin])
-
     function switchAuthModeHandler() {
         setIsLogin((prevState) => !prevState)
-        setNotice(null)
+        resetSensitiveFields()
     }
 
     async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        setNotice(null)
-        setIsSuccess(false)
         setIsLoading(true)
 
-        const enteredEmail = emailInputRef.current!.value
-        const enteredPassword = passwordInputRef.current!.value
-        const adminKeyInput = adminKeyRef.current!.value
+        try {
+            const enteredEmail = emailInputRef.current!.value
+            const enteredPassword = passwordInputRef.current!.value
+            const adminKeyInput = adminKeyRef.current!.value
 
-        if (!isLogin) {
-            try {
-                const validation = await fetch('/api/validate-admin', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ adminKey: adminKeyInput }),
-                })
+            if (!isLogin) {
+                try {
+                    const validation = await fetch('/api/validate-admin', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ adminKey: adminKeyInput }),
+                    })
 
-                const data = await validation.json()
+                    const data = await validation.json()
 
-                if (!validation.ok || !data.valid) {
-                    setNotice('Invalid Admin Authorization Key');
-                    resetSensitiveFields();
-                    setIsLoading(false)
-                    return; 
+                    if (!validation.ok || !data.valid) {
+                        showNotification({
+                            title: 'Error',
+                            message: 'Invalid Admin Authorization Key',
+                            status: 'error',
+                        })
+                        resetSensitiveFields()
+                        return
+                    }
+                } catch (error) {
+                    console.error('Validation error:', error)
+                    showNotification({
+                        title: 'Error',
+                        message: 'Failed to validate admin key',
+                        status: 'error',
+                    })
+                    resetSensitiveFields()
+                    return
                 }
-            } catch (error) {
-                console.error('Validation error:', error)
-                setNotice('Invalid Admin Authorization Key')
+            }
+
+            if (enteredPassword.trim().length < 8) {
+                showNotification({
+                    title: 'Error',
+                    message: 'Password must be at least 8 characters long',
+                    status: 'error',
+                })
                 resetSensitiveFields()
                 return
             }
-        }
 
-        if (enteredPassword.trim().length < 8) {
-            setNotice('Password must be at least 8 characters long.')
-            resetSensitiveFields()
-            return
-        }
+            if (isLogin) {
+                const result = await signIn('credentials', {
+                    email: enteredEmail,
+                    password: enteredPassword,
+                    redirect: false,
+                })
 
-        if (isLogin) {
-            const result = await signIn('credentials', {
-                email: enteredEmail,
-                password: enteredPassword,
-                redirect: false,
-            })
-
-            if (result?.error) {
-                const errorMessage = result.error.includes('Incorrect password') ? 'Incorrect password' : 'Authentication failed'
-                setNotice(errorMessage)
-                resetSensitiveFields()
+                if (result?.error) {
+                    const errorMessage = result.error.includes('Incorrect password')
+                        ? 'Incorrect password'
+                        : 'Authentication failed'
+                    showNotification({
+                        title: 'Error',
+                        message: errorMessage,
+                        status: 'error',
+                    })
+                    resetSensitiveFields()
+                } else {
+                    router.replace('/profile')
+                }
             } else {
-                router.replace('/profile')
-            }
-        } else {
-            try {
                 await createUser(enteredEmail, enteredPassword)
-                setNotice('User created successfully! Login to continue.')
-                setIsSuccess(true)
+                showNotification({
+                    title: 'Success!',
+                    message: 'User created successfully! Login to continue.',
+                    status: 'success',
+                })
                 resetSensitiveFields()
 
                 setTimeout(() => {
                     setIsLogin(true)
-                    setNotice(null)
-                    setIsSuccess(false)
                 }, 3000)
-            } catch (error) {
-                console.log(error)
-                setNotice('Operation failed. Please check your credentials.')
-                resetSensitiveFields()
-            } finally {
-                setIsLoading(false)
             }
+        } catch (error) {
+            console.log(error)
+            showNotification({
+                title: 'Error',
+                message: (error as Error).message || 'Operation failed',
+                status: 'error',
+            })
+            resetSensitiveFields()
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -150,25 +152,58 @@ export default function AuthForm() {
             <form onSubmit={submitHandler}>
                 <div className={styles.control}>
                     <label htmlFor="email">Your Email</label>
-                    <input type="email" id="email" required ref={emailInputRef} autoComplete="username" />
+                    <input
+                        type="email"
+                        id="email"
+                        required
+                        ref={emailInputRef}
+                        autoComplete="username"
+                        disabled={isLoading}
+                    />
                 </div>
                 <div className={styles.control}>
                     <label htmlFor="password">Your Password</label>
-                    <input type="password" id="password" required ref={passwordInputRef} autoComplete="current-password" />
+                    <input
+                        type="password"
+                        id="password"
+                        required
+                        ref={passwordInputRef}
+                        autoComplete="current-password"
+                        disabled={isLoading}
+                    />
                 </div>
 
                 {!isLogin && (
                     <div className={styles.control}>
                         <label htmlFor="admin-key">Admin Authorization Key</label>
-                        <input type="password" id="admin-key" required ref={adminKeyRef} autoComplete="admin-key" />
+                        <input
+                            type="password"
+                            id="admin-key"
+                            required
+                            ref={adminKeyRef}
+                            autoComplete="admin-key"
+                            disabled={isLoading}
+                        />
                     </div>
                 )}
 
-                {isLoading && <p className={styles.loading}>Processing...</p>}
-                {notice && <p className={`${styles.notice} ${isSuccess ? styles.success : ''}`}>{notice}</p>}
                 <div className={styles.actions}>
-                    <button>{isLogin ? 'Login' : 'Create Account'}</button>
-                    <button type="button" className={styles.toggle} onClick={switchAuthModeHandler}>
+                    <button disabled={isLoading}>
+                        {' '}
+                        {isLogin
+                            ? isLoading
+                                ? 'Logging in...'
+                                : 'Login'
+                            : isLoading
+                            ? 'Creating...'
+                            : 'Create Account'}
+                    </button>
+                    <button
+                        type="button"
+                        className={styles.toggle}
+                        disabled={isLoading}
+                        onClick={switchAuthModeHandler}
+                    >
                         {isLogin ? 'Admin Registration' : 'Login with existing account'}
                     </button>
                 </div>
