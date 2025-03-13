@@ -4,7 +4,7 @@ This next level blog will contain daily relevant information for you life!
 
 ## About
 
-This was a Next.js 13 pages router training project that takes advantages of it's full stack features. I've ported it to Next 15.1 with App Router + TypeScript as an additional challenge. Also uses React Markdown lib to get and render markdown text as blog posts and MongoDB to store user messages. Finally, it takes full advange of the Next-Auth lib for user creation and authentication.
+This was a Next.js 13 pages router training project that takes advantages of it's full stack features. I've ported it to Next 15.1 with App Router + TypeScript as an additional challenge. It also uses React Context API for notifications (user feedback on various operations). Ogther features includes using React Markdown lib to get and render markdown text as blog posts and MongoDB to store user messages and admin accounts credentials. Finally, it takes full advange of the Next-Auth lib for user creation and authentication.
 
 ## Live site
 
@@ -83,7 +83,7 @@ NEXTAUTH_URL=''
 
 `ADMIN_AUTH_KEY` works like an authorization key that the user will require to create an admin account. It's kind of how it works in real life when Project Managers have to grant you admin privileges so not everyone can create an admin account.
 
-`NEXTAUTH_SECRET` is a key Next-Auth will use to hash and encrypt the session cookies. I recommend setting an strong key using openssl. On your terminal, type the following:
+`NEXTAUTH_SECRET` is a key Next-Auth will use to hash and encrypt the session cookies. I getting a strong key using openssl. On your terminal, type the following:
 ```
 openssl rand -base64 32
 ```
