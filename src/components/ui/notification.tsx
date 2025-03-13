@@ -1,19 +1,21 @@
 import ReactDOM from 'react-dom'
 
-import { NotificationProps } from '@/interfaces/interfaces'
+import { useNotification } from '@/contexts/notification-context'
 
 import styles from '@/styles/notification.module.css'
 
-function Notification(props: NotificationProps) {
-    const { title, message, status } = props
+export default function Notification() {
+    const { notification } = useNotification()
+
+    if (!notification) return null
 
     let statusClasses = ''
 
-    if (status === 'success') {
+    if (notification.status === 'success') {
         statusClasses = styles.success
     }
 
-    if (status === 'error') {
+    if (notification.status === 'error') {
         statusClasses = styles.error
     }
 
@@ -21,17 +23,14 @@ function Notification(props: NotificationProps) {
 
     const notificationElement = document.getElementById('notifications')
 
-    if (!notificationElement) {
-        return null
-    }
+    if (!notificationElement)  return null
+    
 
     return ReactDOM.createPortal(
         <div className={cssClasses}>
-            <h2>{title}</h2>
-            <p>{message}</p>
+            <h2>{notification.title}</h2>
+            <p>{notification.message}</p>
         </div>,
         notificationElement
     )
 }
-
-export default Notification
