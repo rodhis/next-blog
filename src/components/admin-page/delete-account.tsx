@@ -2,38 +2,52 @@
 
 import { useState } from 'react'
 import { signOut } from 'next-auth/react'
-import styles from '@/styles/delete-account.module.css'
+import { useNotification } from '@/contexts/notification-context'
+import styles from '@/styles/account.module.css'
 
 export default function DeleteAccount() {
     const [isLoading, setIsLoading] = useState(false)
-    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
+    const { showNotification } = useNotification()
 
     const handleDeleteAccount = async () => {
-        const confirmation = window.confirm('Tem certeza que deseja excluir sua conta permanentemente? Esta ação não pode ser desfeita!')
-        
+        const confirmation = window.confirm(
+            'Are you sure you want to delete your account? This action cannot be undone.'
+        )
+
         if (!confirmation) return
 
         setIsLoading(true)
-        setMessage(null)
 
         try {
+            showNotification({
+                status: 'pending',
+                title: 'Processing...',
+                message: 'Delete request is being processed...',
+            })
+
             const response = await fetch('/api/delete-account', {
-                method: 'DELETE'
+                method: 'DELETE',
             })
 
             const data = await response.json()
 
             if (!response.ok) {
-                throw new Error(data.error || 'Falha ao excluir conta')
+                throw new Error(data.error || 'Account deletion failed')
             }
 
-            setMessage({ type: 'success', text: data.message })
+            showNotification({
+                status: 'success',
+                title: 'Success!',
+                message: data.message || 'Account deleted successfully',
+            })
+
             setTimeout(() => signOut({ callbackUrl: '/' }), 2000)
         } catch (error) {
-            console.error('Erro ao excluir conta:', error)
-            setMessage({
-                type: 'error',
-                text: error instanceof Error ? error.message : 'Falha ao excluir conta'
+            console.error('Error deleting account:', error)
+            showNotification({
+                status: 'error',
+                title: 'Error!',
+                message: error instanceof Error ? error.message : 'Account deletion failed',
             })
         } finally {
             setIsLoading(false)
@@ -42,27 +56,21 @@ export default function DeleteAccount() {
 
     return (
         <div className={styles.form}>
-            <h2>Excluir Conta</h2>
-            
+            <h2>Delete Account</h2>
+
             <div className={styles.control}>
                 <p className={styles.warningText}>
-                    Aviso: Esta ação removerá permanentemente sua conta e todos os dados associados.
+                    WARNING: This action will permanently remove your account and all associated data.
                 </p>
             </div>
 
-            {message && (
-                <div className={message.type === 'success' ? styles.successMessage : styles.errorMessage}>
-                    {message.text}
-                </div>
-            )}
-
             <div className={styles.action}>
-                <button 
+                <button
                     onClick={handleDeleteAccount}
                     disabled={isLoading}
                     className={styles.destructiveButton}
                 >
-                    {isLoading ? 'Excluindo...' : 'Excluir Conta Permanentemente'}
+                    {isLoading ? 'Deleting' : 'Permanently Delete Account'}
                 </button>
             </div>
         </div>
