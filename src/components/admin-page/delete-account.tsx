@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { signOut } from 'next-auth/react'
 import { useNotification } from '@/contexts/notification-context'
-import styles from '@/styles/account.module.css'
+import styles from '@/styles/delete-account.module.css'
 
 export default function DeleteAccount() {
     const [isLoading, setIsLoading] = useState(false)
