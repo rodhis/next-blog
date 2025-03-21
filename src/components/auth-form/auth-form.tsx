@@ -103,9 +103,8 @@ export default function AuthForm() {
             showNotification({
                 title: isLogin ? 'Authenticating...' : 'Creating Account...',
                 message: isLogin ? 'Verifying your credentials' : 'Setting up your admin account',
-                status: 'pending'
+                status: 'pending',
             })
-    
 
             if (isLogin) {
                 const result = await signIn('credentials', {
@@ -131,7 +130,7 @@ export default function AuthForm() {
                         status: 'success',
                     })
                     setTimeout(() => {
-                        router.replace('/profile')
+                        router.replace('/admin')
                     }, 1500)
                 }
             } else {
