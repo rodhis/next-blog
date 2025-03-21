@@ -1,11 +1,11 @@
+// app/layout.tsx
 import { getServerSession } from 'next-auth'
 import { Viewport } from 'next'
-
-import MainNavigation from '@/components/main-navigation/main-navigation'
 import Providers from '@/components/providers/session-provider'
 import Notification from '@/components/ui/notification'
 import { NotificationProvider } from '@/contexts/notification-context'
 import { authOptions } from '@/lib/auth'
+import DynamicMainNavigation from '@/components/main-navigation/wrapper'
 
 import '@/styles/globals.css'
 
@@ -27,7 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <body>
                 <Providers session={session}>
                     <NotificationProvider>
-                        <MainNavigation />
+                        <DynamicMainNavigation />
                         <main>{children}</main>
                         <div id="notifications"></div>
                         <Notification />
