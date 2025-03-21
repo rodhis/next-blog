@@ -1,18 +1,19 @@
 .sidebar {
-    width: 250px;
+    width: 80%;
     background-color: var(--color-grey-900);
     height: 100vh;
     position: fixed;
-    left: 0;
+    left: -100%;
     top: 0;
     border-right: 1px solid var(--color-grey-800);
     padding: 1rem;
-    z-index: 1000;
     transition: all 0.3s ease-in-out;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 .hamburgerButton {
-    display: none;
+    display: block;
     background-color: var(--color-grey-900);
     border: 1px solid var(--color-grey-800);
     border-radius: 4px;
@@ -21,7 +22,7 @@
     position: fixed;
     left: 1rem;
     top: 1rem;
-    z-index: 1001;
+    z-index: 101;
     transition: all 0.3s ease;
 }
 
@@ -56,7 +57,7 @@
 }
 
 .nav {
-    margin-top: 2rem;
+    margin-top: 3rem;
 }
 
 .sidebar nav ul {
@@ -114,23 +115,42 @@
     display: flex;
     min-height: 100vh;
     background-color: var(--color-grey-50);
+    position: relative;
 }
 
 .admin-content {
-    margin-left: 250px;
-    padding: 2rem;
-    flex-grow: 1;
-    max-width: calc(100% - 250px);
+    margin-left: 0;
+    padding: 1rem;
+    padding-top: 6rem;
+    width: 100%;
     transition: margin-left 0.3s ease-in-out;
+    background-color: var(--color-grey-50);
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 50;
+}
+
+.admin-content > * {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
 }
 
 .empty-state {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: 60vh;
     color: var(--color-grey-500);
     font-size: 1.2rem;
+    text-align: center;
+    padding: 2rem;
 }
 
 .sidebar-overlay {
@@ -140,7 +160,7 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    z-index: 99;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease-in-out;
@@ -151,41 +171,37 @@
     pointer-events: all;
 }
 
-@media (max-width: 767px) {
-    .sidebar {
-        width: 80%;
-        left: -100%;
-        padding-top: 5rem;
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .sidebar.showMenu {
-        left: 0;
-    }
-
-    .hamburgerButton {
-        display: block;
-    }
-
-    .admin-content {
-        margin-left: 0;
-        padding: 1rem;
-        padding-top: 6rem;
-        width: 100%;
-    }
-
-    .nav {
-        margin-top: 3rem;
-    }
+.sidebar.showMenu {
+    left: 0;
 }
 
 @media (min-width: 768px) {
+    .sidebar {
+        width: 250px;
+        left: 0;
+        box-shadow: none;
+        padding-top: 1rem;
+        z-index: 100;
+    }
+
     .hamburgerButton {
         display: none;
     }
 
     .admin-content {
         margin-left: 250px;
+        padding: 2rem;
         padding-top: 2rem;
+        width: calc(100% - 250px);
+        z-index: 1;
+    }
+
+    .nav {
+        margin-top: 2rem;
+    }
+
+    .admin-content > * {
+        margin: 0 2rem;
+        padding: 2rem;
     }
 }
