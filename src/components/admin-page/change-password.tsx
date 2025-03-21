@@ -4,7 +4,7 @@ import AdminForm from './admin-form'
 
 import styles from '@/styles/admin-profile.module.css'
 
-export default function AdminProfile() {
+export default function ChangePassword() {
     const changePasswordHandler = async (passwordData: { oldPassword: string; newPassword: string }) => {
         const response = await fetch('/api/change-password', {
             method: 'PATCH',
