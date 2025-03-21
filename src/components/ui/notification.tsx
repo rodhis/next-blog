@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -16,11 +15,12 @@ export default function Notification() {
 
     if (!isBrowser || !notification) return null
 
-    const statusClasses = notification.status === 'success' 
-        ? styles.success 
-        : notification.status === 'error' 
-        ? styles.error 
-        : ''
+    const statusClasses =
+        notification.status === 'success'
+            ? styles.success
+            : notification.status === 'error'
+            ? styles.error
+            : ''
 
     const cssClasses = `${styles.notification} ${statusClasses}`
     const portalElement = document.getElementById('notifications')

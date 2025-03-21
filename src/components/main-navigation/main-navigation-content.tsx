@@ -8,7 +8,6 @@ import { useState } from 'react'
 import styles from '@/styles/main-navigation.module.css'
 import Logo from './logo'
 
-
 export default function MainNavigationContent() {
     const { data: session, status } = useSession()
 
@@ -16,9 +15,8 @@ export default function MainNavigationContent() {
 
     function logoutHandler() {
         signOut({
-            callbackUrl: `${window.location.origin}/`
+            callbackUrl: `${window.location.origin}/`,
         })
-        
     }
 
     return (
@@ -27,7 +25,7 @@ export default function MainNavigationContent() {
                 <Logo />
             </Link>
 
-            <button 
+            <button
                 className={`${styles.hamburgerButton} ${menuIsOpen ? styles.active : ''}`}
                 onClick={() => setMenuIsOpen(!menuIsOpen)}
                 aria-label="Menu"
@@ -40,19 +38,27 @@ export default function MainNavigationContent() {
             <nav className={`${styles.nav} ${menuIsOpen ? styles.showMenu : ''}`}>
                 <ul>
                     <li>
-                        <Link href="/posts" onClick={() => setMenuIsOpen(false)}>Posts</Link>
+                        <Link href="/posts" onClick={() => setMenuIsOpen(false)}>
+                            Posts
+                        </Link>
                     </li>
                     <li>
-                        <Link href="/contact" onClick={() => setMenuIsOpen(false)}>Contact</Link>
+                        <Link href="/contact" onClick={() => setMenuIsOpen(false)}>
+                            Contact
+                        </Link>
                     </li>
                     {!session && status !== 'loading' && (
                         <li>
-                            <Link href="/auth" onClick={() => setMenuIsOpen(false)}>Login/Register</Link>
+                            <Link href="/auth" onClick={() => setMenuIsOpen(false)}>
+                                Login/Register
+                            </Link>
                         </li>
                     )}
                     {session && (
                         <li>
-                            <Link href="/admin" onClick={() => setMenuIsOpen(false)}>Admin</Link>
+                            <Link href="/admin" onClick={() => setMenuIsOpen(false)}>
+                                Admin
+                            </Link>
                         </li>
                     )}
                     {session && (

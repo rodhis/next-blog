@@ -1,4 +1,3 @@
-// app/layout.tsx
 import { getServerSession } from 'next-auth'
 import { Viewport } from 'next'
 import Providers from '@/components/providers/session-provider'
