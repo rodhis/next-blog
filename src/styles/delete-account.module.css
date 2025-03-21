@@ -1,16 +1,14 @@
 .form {
- 
-        margin: var(--size-8) auto;
-        border-radius: 6px;
-        background-color: var(--color-grey-100);
-        width: 90%;
-        max-width: 50rem;
-        padding: var(--size-4);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-        font-size: var(--size-6);
-
+    text-align: center;
+    margin: var(--size-8) auto;
+    border-radius: 6px;
+    background-color: var(--color-grey-100);
+    width: 90%;
+    max-width: 50rem;
+    padding: var(--size-4);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    font-size: var(--size-6);
 }
-
 
 .successMessage {
     color: var(--color-success-500);
@@ -28,7 +26,6 @@
     border-radius: 4px;
 }
 
-/* Ações destrutivas */
 .warningText {
     color: var(--color-error-500);
     font-weight: bold;
@@ -38,7 +35,10 @@
 .destructiveButton {
     background-color: var(--color-error-500);
     border-color: var(--color-error-500);
-    width: 100%;
+    border-radius: 6px;
+    width: 50%;
+    padding: 0.5rem;
+    font-size: 1rem;
 }
 
 .destructiveButton:hover {
