@@ -52,8 +52,13 @@ export default function AdminSidebar() {
                             </Link>
                         </li>
                         <li>
+                            <Link href="/" onClick={() => setMenuIsOpen(false)}>
+                                Back to Home
+                            </Link>
+                        </li>
+                        <li>
                             <button onClick={() => signOut({ callbackUrl: '/' })} className={styles.logout}>
-                                Exit
+                                Logout
                             </button>
                         </li>
                     </ul>
