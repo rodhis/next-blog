@@ -2,8 +2,10 @@
 
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+
 import { useState, useRef } from 'react'
 import { useNotification } from '@/contexts/notification-context'
+
 import styles from '@/styles/auth-form.module.css'
 
 async function createUser(email: string, password: string) {

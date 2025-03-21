@@ -2,7 +2,7 @@
 
 import AdminForm from './admin-form'
 
-import styles from '@/styles/admin-profile.module.css'
+import styles from '@/styles/change-password.module.css'
 
 export default function ChangePassword() {
     const changePasswordHandler = async (passwordData: { oldPassword: string; newPassword: string }) => {
