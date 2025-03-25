@@ -24,4 +24,12 @@ export interface AdminFormProps {
     onChangePassword: (passwordData: { oldPassword: string; newPassword: string }) => Promise<void>
 }
 
+export interface Message {
+  _id: string
+  message: string
+  email: string
+  name: string
+  createdAt: string
+}
+
 export type ParamsType = Promise<{ slug: string }>
