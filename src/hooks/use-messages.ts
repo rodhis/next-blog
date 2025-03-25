@@ -1,7 +1,7 @@
-
 'use client'
 
 import { useEffect, useState } from 'react'
+
 import mongodbConnect from '@/lib/mongodb-connect'
 import { Message } from '@/interfaces/interfaces'
 import { useNotification } from '@/contexts/notification-context'
@@ -16,7 +16,7 @@ export function useMessages() {
             showNotification({
                 title: 'Loading...',
                 message: 'Fetching messages from database',
-                status: 'pending'
+                status: 'pending',
             })
 
             let client
@@ -25,7 +25,8 @@ export function useMessages() {
                 if (!client) throw new Error('Database connection failed')
 
                 const db = client.db('next1')
-                const result = await db.collection('next-blog-messages')
+                const result = await db
+                    .collection('next-blog-messages')
                     .find()
                     .sort({ createdAt: -1 })
                     .toArray()
@@ -35,14 +36,14 @@ export function useMessages() {
                 showNotification({
                     title: 'Success!',
                     message: `Loaded ${result.length} messages`,
-                    status: 'success'
+                    status: 'success',
                 })
             } catch (error) {
-                console.error("Error fetching messages:", error)
+                console.error('Error fetching messages:', error)
                 showNotification({
                     title: 'Error!',
                     message: (error as Error).message || 'Failed to load messages',
-                    status: 'error'
+                    status: 'error',
                 })
             } finally {
                 setIsLoading(false)
@@ -58,12 +59,18 @@ export function useMessages() {
 
 import { ObjectId } from 'mongodb'
 
-function serializeMessage(msg: { _id: ObjectId; message?: string; email?: string; name?: string; createdAt?: Date }): Message {
+function serializeMessage(msg: {
+    _id: ObjectId
+    message?: string
+    email?: string
+    name?: string
+    createdAt?: Date
+}): Message {
     return {
         _id: msg._id.toString(),
         message: msg.message || '',
         email: msg.email || '',
         name: msg.name || '',
-        createdAt: msg.createdAt?.toISOString() || new Date().toISOString()
+        createdAt: msg.createdAt?.toISOString() || new Date().toISOString(),
     }
 }

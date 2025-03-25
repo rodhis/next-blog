@@ -2,15 +2,24 @@
 
 import { useState } from 'react'
 
+import { useNotification } from '@/contexts/notification-context'
 import { Message } from '@/interfaces/interfaces'
+
 import styles from '@/styles/messages-list.module.css'
 
 export default function MessagesList({ initialMessages }: { initialMessages: Message[] }) {
     const [messages, setMessages] = useState(initialMessages)
+    const { showNotification } = useNotification()
 
     const handleDelete = async (messageId: string) => {
         const confirmed = window.confirm('Are you sure you want to delete this message?')
         if (!confirmed) return
+
+        showNotification({
+            title: 'Deleting...',
+            message: 'Removing message from database',
+            status: 'pending',
+        })
 
         try {
             const response = await fetch(`/api/messages/${messageId}`, {
@@ -20,9 +29,19 @@ export default function MessagesList({ initialMessages }: { initialMessages: Mes
             if (!response.ok) throw new Error('Failed to delete message')
 
             setMessages(messages.filter((msg) => msg._id !== messageId))
+
+            showNotification({
+                title: 'Success!',
+                message: 'Message deleted successfully',
+                status: 'success',
+            })
         } catch (error) {
             console.error('Delete error:', error)
-            alert('Failed to delete message')
+            showNotification({
+                title: 'Error!',
+                message: (error as Error).message || 'Failed to delete message',
+                status: 'error',
+            })
         }
     }
 
