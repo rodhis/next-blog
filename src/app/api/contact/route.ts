@@ -5,13 +5,20 @@ import mongodbConnect from '@/lib/mongodb-connect'
 export async function POST(req: Request) {
     try {
         const body = await req.json()
-        const { email, name, message, id } = body
+        const { email, name, message } = body
 
-        if (!email || !email.includes('@') || !name || name.trim() === '' || !message || message.trim() === '') {
+        if (
+            !email ||
+            !email.includes('@') ||
+            !name ||
+            name.trim() === '' ||
+            !message ||
+            message.trim() === ''
+        ) {
             return NextResponse.json({ message: 'Invalid input.' }, { status: 422 })
         }
 
-        const newMessage = { email, name, message, id }
+        const newMessage = { email, name, message, createdAt: new Date() }
 
         const client = await mongodbConnect()
 
@@ -19,10 +26,9 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: 'Database connection failed.' }, { status: 500 })
         }
         const db = client.db('next1')
-        
+
         try {
-            const result = await db.collection('next-blog-messages').insertOne(newMessage)
-            newMessage.id = result.insertedId
+            await db.collection('next-blog-messages').insertOne(newMessage)
         } catch (error) {
             client.close()
             NextResponse.json({ message: `Storing message failed: ${error}` }, { status: 500 })
