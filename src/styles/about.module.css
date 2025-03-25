@@ -1,0 +1,10 @@
+.title {
+    font-size: var(--size-12);
+    margin-bottom: var(--size-8);
+}
+
+.article {
+    font-size: var(--size-5);
+    text-align: center;
+    padding: var(--size-8);
+}
