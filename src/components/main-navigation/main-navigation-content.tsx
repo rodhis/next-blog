@@ -37,6 +37,11 @@ export default function MainNavigationContent() {
 
             <nav className={`${styles.nav} ${menuIsOpen ? styles.showMenu : ''}`}>
                 <ul>
+                <li>
+                        <Link href="/about" onClick={() => setMenuIsOpen(false)}>
+                            About Me
+                        </Link>
+                    </li>
                     <li>
                         <Link href="/posts" onClick={() => setMenuIsOpen(false)}>
                             Posts
