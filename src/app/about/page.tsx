@@ -15,7 +15,7 @@ export default function AboutPage() {
             <p>
                 My name is Rodrigo, but I really like the nickname Rodhis, so you can call me that too!
                 I&apos;m from Abaíra, state of Bahia, Brazil, a very small but beautiful city that&apos;s part
-                of the Chapa Diamantina region, which rich flora and fauna. You can visit me sometime!
+                of the Chapa Diamantina region, with rich flora and fauna. You can visit me sometime!
             </p>
             <p>
                 As a child, I aways liked technology and computers, specially if there was videogames involved
