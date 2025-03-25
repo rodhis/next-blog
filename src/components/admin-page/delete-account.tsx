@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import { signOut } from 'next-auth/react'
+
 import { useNotification } from '@/contexts/notification-context'
+
 import styles from '@/styles/delete-account.module.css'
 
 export default function DeleteAccount() {
