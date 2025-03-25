@@ -5,7 +5,7 @@ import styles from '@/styles/account.module.css'
 
 export default function AccountPage() {
     return (
-        <div data-admin-page className={styles.container}>
+        <div className={styles.container}>
             <ChangePassword />
             <DeleteAccount />
         </div>

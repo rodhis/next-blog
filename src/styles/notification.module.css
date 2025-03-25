@@ -16,19 +16,6 @@
     z-index: 1000;
 }
 
-[data-admin-page] .notification {
-    bottom: auto;
-    top: 2rem;
-    left: calc(250px + 2rem);
-    right: auto;
-    width: auto;
-    min-width: 300px;
-    max-width: calc(100% - 250px - 4rem);
-    height: auto;
-    border-radius: 6px;
-    padding: 1rem 2rem;
-}
-
 .notification h2 {
     font-size: var(--size-6);
     margin: 0;
