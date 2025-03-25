@@ -5,6 +5,7 @@ import clarinet from '@/assets/images/site/clarinet.jpeg'
 import beer from '@/assets/images/site/beer.jpeg'
 
 import styles from '@/styles/about.module.css'
+import Link from 'next/link'
 
 export default function AboutPage() {
     return (
@@ -50,6 +51,10 @@ export default function AboutPage() {
                 </li>
                 <li>Back-end: Express, MySQL, PostgreSQL, MariaDB, MongoDB;</li>
             </ul>
+            <h2>
+                Links to my GitHub, LinkedIn and Certifications: <br />
+                <Link href="https://linktr.ee/rodhiss">Linktr.ee</Link>
+            </h2>
         </article>
     )
 }

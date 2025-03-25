@@ -8,3 +8,7 @@
     text-align: center;
     padding: var(--size-8);
 }
+
+.article ul {
+    list-style-position: inside;
+}
