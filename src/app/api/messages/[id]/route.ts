@@ -1,45 +1,39 @@
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
+
 import { ObjectId } from 'mongodb'
 
 import mongodbConnect from '@/lib/mongodb-connect'
 import { authOptions } from '@/lib/auth'
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  const session = await getServerSession(authOptions)
-  
-  if (!session) {
-    return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
-  }
+export async function DELETE({ params }: { params: { id: string } }) {
+    const session = await getServerSession(authOptions)
 
-  const { id } = params
-  let client
-
-  try {
-    client = await mongodbConnect()
-    if (!client) {
-      return NextResponse.json({ error: 'Erro de conexão' }, { status: 500 })
+    if (!session) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const db = client.db('next1')
-    const result = await db.collection('next-blog-messages')
-      .deleteOne({ _id: new ObjectId(id) })
+    const { id } = params
+    let client
 
-    if (result.deletedCount === 0) {
-      return NextResponse.json({ error: 'Mensagem não encontrada' }, { status: 404 })
+    try {
+        client = await mongodbConnect()
+        if (!client) {
+            return NextResponse.json({ error: 'Database error' }, { status: 500 })
+        }
+
+        const db = client.db('next1')
+        const result = await db.collection('next-blog-messages').deleteOne({ _id: new ObjectId(id) })
+
+        if (result.deletedCount === 0) {
+            return NextResponse.json({ error: 'Message not found' }, { status: 404 })
+        }
+
+        return NextResponse.json({ message: 'Message deleted successfully' })
+    } catch (error) {
+        console.error('Delete API error:', error)
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    } finally {
+        if (client) await client.close()
     }
-
-    return NextResponse.json({ message: 'Mensagem excluída com sucesso' })
-  } catch (error) {
-    console.error("Erro na API de exclusão:", error)
-    return NextResponse.json(
-      { error: 'Erro interno do servidor' },
-      { status: 500 }
-    )
-  } finally {
-    if (client) await client.close()
-  }
 }
