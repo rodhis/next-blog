@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import { signOut } from 'next-auth/react'
 
+import { useState } from 'react'
 import { useNotification } from '@/contexts/notification-context'
 
 import styles from '@/styles/delete-account.module.css'
@@ -12,9 +12,7 @@ export default function DeleteAccount() {
     const { showNotification } = useNotification()
 
     const handleDeleteAccount = async () => {
-        const confirmation = window.confirm(
-            'Are you sure you want to delete your account? This action cannot be undone.'
-        )
+        const confirmation = window.confirm('Are you sure you want to delete your account? This action cannot be undone.')
 
         if (!confirmation) return
 
@@ -67,11 +65,7 @@ export default function DeleteAccount() {
             </div>
 
             <div className={styles.action}>
-                <button
-                    onClick={handleDeleteAccount}
-                    disabled={isLoading}
-                    className={styles.destructiveButton}
-                >
+                <button onClick={handleDeleteAccount} disabled={isLoading} className={styles.destructiveButton}>
                     {isLoading ? 'Deleting' : 'Permanently Delete Account'}
                 </button>
             </div>

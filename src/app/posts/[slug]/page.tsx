@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: ParamsType }) {
     const postData = await getPostData(slug)
 
     if (!postData) {
-        return { title: 'Post não encontrado', description: 'Não encontrado.' }
+        return { title: 'Post not Found', description: 'Not found.' }
     }
 
     return { title: postData.title, description: postData.excerpt }

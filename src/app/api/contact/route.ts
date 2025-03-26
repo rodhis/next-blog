@@ -7,14 +7,7 @@ export async function POST(req: Request) {
         const body = await req.json()
         const { email, name, message } = body
 
-        if (
-            !email ||
-            !email.includes('@') ||
-            !name ||
-            name.trim() === '' ||
-            !message ||
-            message.trim() === ''
-        ) {
+        if (!email || !email.includes('@') || !name || name.trim() === '' || !message || message.trim() === '') {
             return NextResponse.json({ message: 'Invalid input.' }, { status: 422 })
         }
 

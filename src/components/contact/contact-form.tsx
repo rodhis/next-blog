@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-
 import { useNotification } from '@/contexts/notification-context'
 
 import styles from '@/styles/contact-form.module.css'

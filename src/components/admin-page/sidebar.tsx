@@ -3,7 +3,9 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
+
 import { useState, useEffect } from 'react'
+
 import styles from '@/styles/admin-sidebar.module.css'
 
 export default function AdminSidebar() {
@@ -33,10 +35,7 @@ export default function AdminSidebar() {
                 <span className={styles.bar}></span>
             </button>
 
-            <div
-                className={`${styles.sidebarOverlay} ${menuIsOpen ? 'active' : ''}`}
-                onClick={() => setMenuIsOpen(false)}
-            />
+            <div className={`${styles.sidebarOverlay} ${menuIsOpen ? 'active' : ''}`} onClick={() => setMenuIsOpen(false)} />
 
             <aside className={`${styles.sidebar} ${menuIsOpen ? styles.showMenu : ''}`}>
                 <nav>

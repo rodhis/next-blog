@@ -167,14 +167,7 @@ export default function AuthForm() {
             <form onSubmit={submitHandler}>
                 <div className={styles.control}>
                     <label htmlFor="email">Your Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        required
-                        ref={emailInputRef}
-                        autoComplete="username"
-                        disabled={isLoading}
-                    />
+                    <input type="email" id="email" required ref={emailInputRef} autoComplete="username" disabled={isLoading} />
                 </div>
                 <div className={styles.control}>
                     <label htmlFor="password">Your Password</label>
@@ -205,20 +198,9 @@ export default function AuthForm() {
                 <div className={styles.actions}>
                     <button disabled={isLoading}>
                         {' '}
-                        {isLogin
-                            ? isLoading
-                                ? 'Logging in...'
-                                : 'Login'
-                            : isLoading
-                            ? 'Creating...'
-                            : 'Create Account'}
+                        {isLogin ? (isLoading ? 'Logging in...' : 'Login') : isLoading ? 'Creating...' : 'Create Account'}
                     </button>
-                    <button
-                        type="button"
-                        className={styles.toggle}
-                        disabled={isLoading}
-                        onClick={switchAuthModeHandler}
-                    >
+                    <button type="button" className={styles.toggle} disabled={isLoading} onClick={switchAuthModeHandler}>
                         {isLogin ? 'Admin Registration' : 'Login with existing account'}
                     </button>
                 </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useNotification } from '@/contexts/notification-context'
+
 import { Message } from '@/interfaces/interfaces'
 
 import styles from '@/styles/messages-list.module.css'

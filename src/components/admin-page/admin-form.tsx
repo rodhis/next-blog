@@ -2,7 +2,9 @@
 
 import { useRef, useState } from 'react'
 import { useNotification } from '@/contexts/notification-context'
+
 import { AdminFormProps } from '@/interfaces/interfaces'
+
 import styles from '@/styles/admin-form.module.css'
 
 export default function AdminForm({ onChangePassword }: AdminFormProps) {
@@ -20,7 +22,7 @@ export default function AdminForm({ onChangePassword }: AdminFormProps) {
                 showNotification({
                     title: 'Error',
                     message: 'Please fill in all fields',
-                    status: 'error'
+                    status: 'error',
                 })
                 return
             }
@@ -32,7 +34,7 @@ export default function AdminForm({ onChangePassword }: AdminFormProps) {
                 showNotification({
                     title: 'Error',
                     message: 'New password must be at least 8 characters',
-                    status: 'error'
+                    status: 'error',
                 })
                 return
             }
@@ -41,14 +43,14 @@ export default function AdminForm({ onChangePassword }: AdminFormProps) {
                 showNotification({
                     title: 'Error',
                     message: 'New password must be different from old password',
-                    status: 'error'
+                    status: 'error',
                 })
                 return
             }
 
-            await onChangePassword({ 
-                oldPassword: enteredOldPassword, 
-                newPassword: enteredNewPassword 
+            await onChangePassword({
+                oldPassword: enteredOldPassword,
+                newPassword: enteredNewPassword,
             })
 
             oldPasswordRef.current.value = ''
@@ -57,14 +59,13 @@ export default function AdminForm({ onChangePassword }: AdminFormProps) {
             showNotification({
                 title: 'Success',
                 message: 'Password changed successfully!',
-                status: 'success'
+                status: 'success',
             })
-
         } catch (error) {
             showNotification({
                 title: 'Error',
                 message: (error as Error).message || 'Failed to change password',
-                status: 'error'
+                status: 'error',
             })
         } finally {
             setIsSubmitting(false)
@@ -99,9 +100,7 @@ export default function AdminForm({ onChangePassword }: AdminFormProps) {
                     />
                 </div>
                 <div className={styles.action}>
-                    <button disabled={isSubmitting}>
-                        {isSubmitting ? 'Changing...' : 'Change Password'}
-                    </button>
+                    <button disabled={isSubmitting}>{isSubmitting ? 'Changing...' : 'Change Password'}</button>
                 </div>
             </form>
         </>

@@ -1,41 +1,40 @@
-
 .container {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
-  }
-  
-  .list {
+}
+
+.list {
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-  
-  .message {
+}
+
+.message {
     background: #fff;
     border-radius: 8px;
     padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-  }
-  
-  .content {
+}
+
+.content {
     flex-grow: 1;
-  }
-  
-  .meta {
+}
+
+.meta {
     margin-top: 1rem;
     display: flex;
     gap: 1rem;
     font-size: 0.9rem;
     color: #666;
-  }
-  
-  .deleteButton {
+}
+
+.deleteButton {
     background: #ff4444;
     color: white;
     border: none;
@@ -43,8 +42,8 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.2s;
-  }
-  
-  .deleteButton:hover {
+}
+
+.deleteButton:hover {
     background: #cc0000;
-  }
+}

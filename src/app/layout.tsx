@@ -1,5 +1,6 @@
 import { getServerSession } from 'next-auth'
 import { Viewport } from 'next'
+
 import Providers from '@/components/providers/session-provider'
 import Notification from '@/components/ui/notification'
 import { NotificationProvider } from '@/contexts/notification-context'

@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useCallback, ReactNode, useRef, useEffect } from 'react'
+
 import { NotificationContextType, NotificationProps } from '@/interfaces/interfaces'
 
 const NotificationContext = createContext<NotificationContextType | null>(null)
@@ -21,10 +22,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
             setNotification(notificationData)
 
-            timeoutRef.current = setTimeout(
-                () => hideNotification(),
-                notificationData.status === 'pending' ? 3000 : 6000
-            )
+            timeoutRef.current = setTimeout(() => hideNotification(), notificationData.status === 'pending' ? 3000 : 6000)
         },
         [hideNotification]
     )

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { useNotification } from '@/contexts/notification-context'
+
 import styles from '@/styles/notification.module.css'
 
 export default function Notification() {
@@ -15,12 +16,7 @@ export default function Notification() {
 
     if (!isBrowser || !notification) return null
 
-    const statusClasses =
-        notification.status === 'success'
-            ? styles.success
-            : notification.status === 'error'
-            ? styles.error
-            : ''
+    const statusClasses = notification.status === 'success' ? styles.success : notification.status === 'error' ? styles.error : ''
 
     const cssClasses = `${styles.notification} ${statusClasses}`
     const portalElement = document.getElementById('notifications')

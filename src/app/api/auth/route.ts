@@ -14,10 +14,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (password.trim().length < 8) {
-        return NextResponse.json(
-            { message: 'Password must be at least 8 characters' },
-            { status: 422 }
-        )
+        return NextResponse.json({ message: 'Password must be at least 8 characters' }, { status: 422 })
     }
 
     const client = await mongodbConnect()

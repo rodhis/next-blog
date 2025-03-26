@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useNotification } from '@/contexts/notification-context'
 
 import mongodbConnect from '@/lib/mongodb-connect'
+
 import { Message } from '@/interfaces/interfaces'
-import { useNotification } from '@/contexts/notification-context'
 
 export function useMessages() {
     const [messages, setMessages] = useState<Message[]>([])
@@ -25,11 +26,7 @@ export function useMessages() {
                 if (!client) throw new Error('Database connection failed')
 
                 const db = client.db('next1')
-                const result = await db
-                    .collection('next-blog-messages')
-                    .find()
-                    .sort({ createdAt: -1 })
-                    .toArray()
+                const result = await db.collection('next-blog-messages').find().sort({ createdAt: -1 }).toArray()
 
                 const serializedMessages = result.map(serializeMessage)
                 setMessages(serializedMessages)
@@ -59,13 +56,7 @@ export function useMessages() {
 
 import { ObjectId } from 'mongodb'
 
-function serializeMessage(msg: {
-    _id: ObjectId
-    message?: string
-    email?: string
-    name?: string
-    createdAt?: Date
-}): Message {
+function serializeMessage(msg: { _id: ObjectId; message?: string; email?: string; name?: string; createdAt?: Date }): Message {
     return {
         _id: msg._id.toString(),
         message: msg.message || '',
