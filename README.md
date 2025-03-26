@@ -1,14 +1,16 @@
 # Next Blog
 
-This next level blog will contain daily relevant information for you life!
+In this blog, you can post about technology, host previews of your projects and have an interface to receive and view contact messages!
 
 ## About
 
-This was a Next.js 13 pages router training project that takes advantages of it's full stack features. I've ported it to Next 15.1 with App Router + TypeScript as an additional challenge. It also uses React Context API for notifications (user feedback on various operations). Ogther features includes using React Markdown lib to get and render markdown text as blog posts and MongoDB to store user messages and admin accounts credentials. Finally, it takes full advange of the Next-Auth lib for user creation and authentication.
+This is a Next.js 13 Pages Router training project that takes advantage of its full-stack features. I've ported it to Next.js 15.1 with the App Router and TypeScript as an additional challenge. It also uses the React Context API for notifications (user feedback on various operations). Other features include using the React Markdown library to parse and render markdown text as blog posts and MongoDB to store user messages and admin account credentials. Finally, it takes full advantage of the Next-Auth library for user creation and authentication.
 
-## Live site
+I've also included a dashboard where you can view contact messages, change your password, and delete your admin account if needed. It's a versatile project that you can use as your portfolio page.
 
-Project is now hosted in vercel! Take a look at it running live:
+## Live Site
+
+The project is now hosted on Vercel! Check it out live:
 
 https://next-blog-fawn-sigma.vercel.app/
 
@@ -73,20 +75,20 @@ MONGODB_PASSWORD=''
 MONGODB_CLUSTER=''
 ```
 
-Set `MONGODB_USERNAME` and `MONGODB_PASSWORD` with your actual MongoDB account username and password. `MONGODB_CLUSTER` should be setted with your cluster identifier. E.g.: `blogdb.abcd123`.
+Set `MONGODB_USERNAME` and `MONGODB_PASSWORD` with your actual MongoDB account username and password. `MONGODB_CLUSTER` should be set with your cluster identifier. For example: `blogdb.abcd123`.
 
 ```
 ADMIN_AUTH_KEY=''
-NEXTAUTH_SECRET=
+NEXTAUTH_SECRET=''
 NEXTAUTH_URL=''
 ```
 
-`ADMIN_AUTH_KEY` works like an authorization key that the user will require to create an admin account. It's kind of how it works in real life when Project Managers have to grant you admin privileges so not everyone can create an admin account.
+`ADMIN_AUTH_KEY` works as an authorization key that the user will require to create an admin account. It's similar to how Project Managers grant admin privileges in real life so not everyone can create an admin account.
 
-`NEXTAUTH_SECRET` is a key Next-Auth will use to hash and encrypt the session cookies. I getting a strong key using openssl. On your terminal, type the following:
+`NEXTAUTH_SECRET` is a key that Next-Auth will use to hash and encrypt the session cookies. You can generate a strong key using OpenSSL. On your terminal, type the following:
 ```
 openssl rand -base64 32
 ```
-Then set the result as the value for this variable on the `.env` file.
+Then set the result as the value for this variable in the `.env` file.
 
-`NEXTAUTH_URL` is optional and should point to the actual url of where the project is hosted. E.g.: `NEXTAUTH_URL='http://your-site-sigma.vercel.app`.
+`NEXTAUTH_URL` is optional and should point to the actual URL where the project is hosted. For example: `NEXTAUTH_URL='http://your-site-sigma.vercel.app'`.
