@@ -24,22 +24,30 @@
 .hero h1 {
     font-size: var(--size-8);
     margin: var(--size-2) 0;
+    padding: var(--size-3) 0; 
     color: var(--color-grey-300);
 }
 
 .hero p {
-    font-size: var(--size-6);
+    font-size: var(--size-5);
     color: var(--color-grey-200);
     width: 90%;
     max-width: 40rem;
     margin: auto;
 }
 
+.icons {
+    display: flex;
+    justify-content: center;
+    gap: var(--size-5);
+}
+
+
 @media (min-width: 768px) {
     .hero h1 {
         font-size: var(--size-12);
     }
     .hero p {
-        font-size: var(--size-10);
+        font-size: var(--size-8);
     }
 }
