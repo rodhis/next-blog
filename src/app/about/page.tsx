@@ -42,8 +42,10 @@ export default function AboutPage() {
             <h2>Other technologies I know</h2>
             <ul>
                 <li>Agile Methodologies (Scrum, Kanban);</li>
-                <li>Front-End technologies: Bootstrap, Tailwindcss, SASS, CMS (Content Management System);</li>
-                <li>Back-end: Express, MySQL, PostgreSQL, MariaDB, MongoDB;</li>
+                <li>Front-End technologies: Bootstrap, TailWindCSS, SASS, CMS (Content Management System);</li>
+                <li>Back-end: Express, MySQL, PostgreSQL, MongoDB;</li>
+                <li>Cloud: AWS (with certifications AWS Certified Cloud Practitioner and AWS Certified AI Practitioner)</li>
+                <li>Tests: Jest, Vitest, React Testing Library</li>
             </ul>
             <h2>
                 Links to my GitHub, LinkedIn and certifications: <br />
