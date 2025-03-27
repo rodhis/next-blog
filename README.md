@@ -4,9 +4,9 @@ In this blog, you can post about technology, host previews of your projects and 
 
 ## About
 
-This is a Next.js 13 Pages Router training project that takes advantage of its full-stack features. I've ported it to Next.js 15.1 with the App Router and TypeScript as an additional challenge. It also uses the React Context API for notifications (user feedback on various operations). Other features include using the React Markdown library to parse and render markdown text as blog posts and MongoDB to store user messages and admin account credentials. Finally, it takes full advantage of the Next-Auth library for user creation and authentication. And it has minimal responsivity to mobile devices.
+This was a Next.js 10 Pages Router project that takes advantage of its full-stack features. I've ported it to Next.js 15.1 with the App Router and TypeScript as an additional challenge. It also uses the React Context API for notifications (user feedback on various operations). Other features include using the React Markdown library to parse and render markdown text as blog posts and MongoDB to store user messages and admin account credentials. Finally, it takes full advantage of the Next-Auth library for user creation and authentication with bcryptjs to encrypt passwords. And it has minimal responsivity to mobile devices.
 
-I've also included a dashboard where you can view contact messages, change your password, and delete your admin account if needed. It's a versatile project that you can use as your portfolio page.
+I've also included a dashboard where you can view contact messages, change your password, and delete your admin account if needed. It's a versatile project that you can use as your portfolio page, as I will in the near future.
 
 ## Live Site
 
