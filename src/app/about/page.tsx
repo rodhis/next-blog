@@ -2,7 +2,6 @@ import Image from 'next/image'
 
 import myself from '@/assets/images/site/myself.png'
 import clarinet from '@/assets/images/site/clarinet.jpeg'
-import beer from '@/assets/images/site/beer.jpeg'
 
 import styles from '@/styles/about.module.css'
 import Link from 'next/link'
@@ -32,8 +31,7 @@ export default function AboutPage() {
                 When I&apos;m not coding, I like to spend my time playing clarinet, which is inherited from my family. I also like
                 to play video games, watch movies and series, and dedicate a good amount of time listening to music.
             </p>
-            <p>I&apos;m also a beer lover, so come drink a cold one with me! hehe</p>
-            <Image src={beer} alt="An image of me with a beer can" width={300} height={450} />
+
             <p>
                 This website was part of a migration project from Next 10 pages router, in which I incremented with other stuff
                 and decided to make it my personal blog, and, in the future, a portfolio of my projects. I hope you enjoy it! And
