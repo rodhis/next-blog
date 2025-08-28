@@ -1,7 +1,7 @@
 ---
 title: 'Using Next.js the Right Way: Beyond React with Routing'
 date: '2025-08-28'
-image: 'getting-started-nextjs.png'
+image: 'next-correct-usage.png'
 excerpt: 'Learn how to leverage Next.js properly by embracing server-first architecture and avoiding common pitfalls that turn your app into an overengineered SPA.'
 isFeatured: true
 ---
