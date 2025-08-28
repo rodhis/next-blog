@@ -8,7 +8,7 @@ isFeatured: true
 
 # Using Next.js the Right Way: Beyond React with Routing
 
-Many projects claim to use Next.js but end up being React SPAs (Single Page Applications) with a light touch of routing. When code is filled with `use client` directives, the architecture loses its purpose — and the benefits of React Server Components (RSC) disappear completely.
+Many projects claim to use Next.js but end up being React SPAs (Single Page Applications) with a light touch of routing. When code is filled with "use client" directives, the architecture loses its purpose — and the benefits of React Server Components (RSC) disappear completely.
 
 The golden rule is simple: **Server-first. Client only when necessary.**
 
@@ -20,7 +20,7 @@ Here are the key principles that make the difference:
 
 ## 1. Prefer Native Fetch
 
-Next.js's `fetch()` is optimized to run on the server with automatic caching and awareness:
+Next.js's "fetch()" is optimized to run on the server with automatic caching and awareness:
 
 ```javascript
 // ✅ Good - Server-side fetch with automatic caching
@@ -103,7 +103,7 @@ function ProductList() {
 
 ## 5. Forget Loading Spinners with State
 
-Use `loading.tsx` in routes with Suspense instead. It's clean, performant, and already integrated with the framework's flow:
+Use "loading.tsx" in routes with Suspense instead. It's clean, performant, and already integrated with the framework's flow:
 
 ```typescript
 // app/products/loading.tsx
@@ -144,7 +144,7 @@ const StyledButton = styled.button`
 
 ## 7. Middleware is Hidden Gold
 
-Authentication? Redirects? Geolocation? The `middleware.ts` runs before rendering — fast, on the edge, and with no client-side JavaScript cost:
+Authentication? Redirects? Geolocation? "middleware.ts" files run before rendering — fast, on the edge, and with no client-side JavaScript cost:
 
 ```typescript
 // middleware.ts
@@ -242,7 +242,7 @@ export default async function BlogPost({ params }) {
 1. **Next.js isn't just about routing** — it's about server-first architecture
 2. **Understand the fundamentals**: render cycles, RSC, and streaming
 3. **Study the basics, use with intention**
-4. **Don't accept `use client` as the default answer**
+4. **Don't accept "use client" as the default answer**
 
 When used correctly, Next.js provides exceptional performance, SEO benefits, and developer experience. When misused, it becomes an overengineered React SPA with unnecessary complexity.
 
