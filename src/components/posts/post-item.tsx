@@ -33,7 +33,6 @@ export default function PostItem(props: PostItemProps) {
                     <p>{excerpt}</p>
                 </div>
             </Link>
-            <p>Post Excerpt</p>
         </li>
     )
 }
