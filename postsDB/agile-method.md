@@ -3,7 +3,7 @@ title: 'Agile Methodology'
 date: '2025-02-15'
 image: 'agile-methodology.webp'
 excerpt: 'Agile methodology emphasizes flexibility, collaboration, and customer satisfaction in project management and software development.'
-isFeatured: true
+isFeatured: false
 ---
 
 # Agile Methodology
