@@ -23,11 +23,11 @@ export default function PostContent({ post }: { post: Post }) {
                 const imageSrc = image.properties.src.startsWith('/')
                     ? image.properties.src
                     : `/images/posts/${post.slug}/${image.properties.src}`
-                    
+
                 const altText = image.properties.alt || ''
-                const isSmall = ['icon', 'logo', 'badge'].some(keyword => 
-    altText.toLowerCase().includes(keyword)
-)
+                const isSmall = ['icon', 'logo', 'badge'].some((keyword) =>
+                    altText.toLowerCase().includes(keyword)
+                )
                 const width = isSmall ? 180 : 700
                 const height = isSmall ? 150 : 400
 
