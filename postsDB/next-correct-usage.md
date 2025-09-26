@@ -113,7 +113,8 @@ export default function Loading() {
 
 // app/products/page.tsx
 export default async function ProductsPage() {
-    const products = await getProducts() // This will show loading.tsx while fetching
+    const products = await getProducts() // This will show 
+    // loading.tsx while fetching
     return <ProductList products={products} />
 }
 ```
@@ -126,7 +127,8 @@ Besides being outdated in the ecosystem, it requires extra solutions for SSR. Ta
 // ✅ Tailwind - SSR ready, no runtime overhead
 function Button({ children }) {
     return (
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold 
+        py-2 px-4 rounded">
             {children}
         </button>
     )
